@@ -1,4 +1,4 @@
-package bill.zts.com.bill.ui;
+package bill.zts.com.bill.ui.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

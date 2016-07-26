@@ -45,7 +45,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         setContentView(getLayout());
         ButterKnife.bind(this);
         intiData();
-       // initToolBar();
+        initToolBar();
         initPresenter();
         checkPresenterIsNull();
 

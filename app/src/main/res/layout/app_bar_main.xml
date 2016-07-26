@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -23,25 +23,15 @@
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/app_bar_SwipeRefreshLayout"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize">
+         >
 
-        <LinearLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp" />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="60dp" />
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+            android:layout_height="wrap_content"/>
 
 
     </android.support.v4.widget.SwipeRefreshLayout>

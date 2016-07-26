@@ -17,4 +17,5 @@ public class BasePresenter<IV extends IBaseView> {
         mContext = context;
         mView = view;
     }
+
 }

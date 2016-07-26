@@ -23,7 +23,7 @@ public class DataUtils {
 
     }
 
-    public int getCurrentMonthDatas(){
+    public static int getCurrentMonthDatas(){
         return Day_Count;
     }
 
