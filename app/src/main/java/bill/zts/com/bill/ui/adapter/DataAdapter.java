@@ -60,8 +60,16 @@ public class DataAdapter extends BaseRecycleViewAdapter<DataInfo>  {
         TextView item_data_tv = holder.getView( R.id.item_data_tv);
         TextView item_bill_tv = holder.getView( R.id.item_bill_tv);
 
-        item_week_tv.setText(""+dataInfo.getWeekInfo());
-        item_data_tv.setText(""+dataInfo.getDataInfo());
+        if(monthMap.get(holderPosition+1)!=null){
+            item_week_tv.setText("!!!!!!!!!!!!!!!!!"+holderPosition);
+        }else {
+
+            item_week_tv.setText(""+dataInfo.getWeekInfo());
+            item_data_tv.setText(""+dataInfo.getDataInfo());
+        }
+
+
+
     }
 
     @Override

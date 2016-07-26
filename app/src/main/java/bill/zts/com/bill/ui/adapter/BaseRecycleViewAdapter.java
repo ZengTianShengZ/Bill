@@ -1,21 +1,17 @@
 package bill.zts.com.bill.ui.adapter;
 
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import bill.zts.com.bill.R;
-import bill.zts.com.bill.ui.domain.DataInfo;
 
 
 /**
@@ -60,24 +56,25 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 		return position;
 	}
 
+
  	@Override
 	public int getItemViewType(int position) {
 		/*if(position == 0){
 			return TYPE_HEAD;
 		}*/
-		if(monthMap.get(getItemCount())!=null){
-			Log.i("monthMap","..........monthMap.........."+monthMap.get(getItemCount()));
-			Log.i("position","..........position.........."+position);
-			if(position+1 == monthMap.get(getItemCount())){
-				return TYPE_HEAD;
-			}
-		}
+
+
 		if (position+1  == getItemCount()) {
-			monthMap.put(getItemCount(),getItemCount());
+
+			monthMap.put(position+1,getItemCount());
+			Log.i("..monthMap..","........monthMap........."+monthMap.get(position+1));
 			return TYPE_BOTTOM;
-		} else {
+		}
+		else {
+
 			return TYPE_BODY;
 		}
+
 	}
 
 	@Override
@@ -120,7 +117,7 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 	public RecycleViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 		switch (viewType) {
 			case TYPE_HEAD:
-				return  RecycleViewHolder.get(mContext, parent, R.layout.list_item_month_hrad);
+				return  RecycleViewHolder.get(mContext, parent, R.layout.list_item_month_head);
 			case TYPE_BODY:
 				return RecycleViewHolder.get(mContext, parent, mLayoutId);
 
@@ -158,7 +155,7 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 		notifyDataSetChanged();
 	}
 	public void appendMoreItem(List<T> data){
-		mDatas.addAll(mDatas.size()-1,data);
+		mDatas.addAll(data);
 
 		//Cannot call this method while RecyclerView is computing a layout or scrolling
 		// 直接 notifyDataSetChanged 会 抛异常，因为 在 执行 onBindViewHolder 不能 notifyDataSetChanged

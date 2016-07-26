@@ -57,6 +57,8 @@ public class DataUtils {
             //System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
             dataInfoList.add(dataInfo);
         }
+        DataInfo dataInfo = new DataInfo("bottom","bottom","bottom");
+        dataInfoList.add(dataInfo);
         return dataInfoList;
     }
 
