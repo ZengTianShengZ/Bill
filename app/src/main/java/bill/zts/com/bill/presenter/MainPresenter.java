@@ -15,9 +15,9 @@ import mvp.zts.com.mvp_base.Presenter.IView.IBaseView;
 /**
  * Created by Administrator on 2016/7/25.
  */
-public class MainPresenter extends BasePresenter<IRefreshView> {
+public class MainPresenter extends BasePresenter<IMianView> {
 
-    public MainPresenter(Activity context, IRefreshView view) {
+    public MainPresenter(Activity context, IMianView view) {
         super(context, view);
     }
 
@@ -26,10 +26,10 @@ public class MainPresenter extends BasePresenter<IRefreshView> {
 
         int datas =  DataUtils.getCurrentMonthDatas();
         List<Integer> lis_int = new ArrayList<Integer>();
-        for(int i = datas;i>1;i--){
+        for(int i = datas;i>0;i--){
             lis_int.add(i);
         }
         mView.fillInitData(lis_int);
-       // mView.getDataFinish();
+
     }
 }

@@ -23,6 +23,10 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:name=".ui.activity.DatePickerActivity"></activity>
 
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.activity.activityTest"></activity>
+
     </application>
 
 </manifest>

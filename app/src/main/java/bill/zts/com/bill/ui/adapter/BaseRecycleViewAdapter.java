@@ -60,7 +60,7 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 		if(position == 0){
 			return TYPE_HEAD;
 		}
-		if (position + 1 > getItemCount()) {
+		if (position+1  == getItemCount()) {
 			return TYPE_BOTTOM;
 		} else {
 			return TYPE_BODY;

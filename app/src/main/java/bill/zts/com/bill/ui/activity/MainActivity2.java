@@ -19,20 +19,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bill.zts.com.bill.R;
+import bill.zts.com.bill.presenter.IView.IMianView;
 import bill.zts.com.bill.presenter.IView.IRefreshView;
 import bill.zts.com.bill.presenter.MainPresenter;
 import bill.zts.com.bill.ui.adapter.DataAdapter;
 import butterknife.Bind;
+import mvp.zts.com.mvp_base.ui.activity.BaseActivity;
 import mvp.zts.com.mvp_base.ui.activity.BaseSwipeRefreshActivity;
 
 /**
  * Created by Administrator on 2016/7/25.
  */
-public class MainActivity2 extends BaseSwipeRefreshActivity<MainPresenter> implements IRefreshView,NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity2 extends BaseActivity<MainPresenter> implements IMianView,NavigationView.OnNavigationItemSelectedListener {
 
 
     @Bind(R.id.app_bar_SwipeRefreshLayout)
-    SwipeRefreshLayout app_bar_SwipeRefreshLayout;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.recyclerview)
     RecyclerView recyclerview;
     @Bind(R.id.toolbar)
@@ -45,10 +47,7 @@ public class MainActivity2 extends BaseSwipeRefreshActivity<MainPresenter> imple
     private DataAdapter mDataAdapter;
     private  List<Integer> lis_int = new ArrayList<Integer>();
 
-    @Override
-    protected SwipeRefreshLayout getSwipeRefreshLayout() {
-        return app_bar_SwipeRefreshLayout;
-    }
+
     @Override
     protected Toolbar getToolbar() {
         return toolbar;
@@ -67,7 +66,6 @@ public class MainActivity2 extends BaseSwipeRefreshActivity<MainPresenter> imple
         initView();
     }
 
-
     @Override
     protected void initPresenter() {
         mPresenter = new MainPresenter(this,this);
@@ -75,43 +73,12 @@ public class MainActivity2 extends BaseSwipeRefreshActivity<MainPresenter> imple
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        app_bar_SwipeRefreshLayout.setRefreshing(true);
+        mSwipeRefreshLayout.setRefreshing(true);
         mPresenter.getCurrentMonthDatas();
 
     }
     @Override
     protected void intiData() {
-
-    }
-
-    @Override
-    protected void onRefreshStarted() {
-
-    }
-    @Override
-    public void showEmptyView() {
-
-    }
-
-    @Override
-    public void showErrorView(Throwable throwable) {
-
-    }
-
-
-    @Override
-    public void fillInitData(List mData) {
-        Log.i("........","...........mData..........."+mData.get(2));
-        mDataAdapter.insertedAllItem(mData);
-    }
-
-    @Override
-    public void appendMoreDataToView(List mData) {
-
-    }
-
-    @Override
-    public void hasNoMoreData() {
 
     }
 
@@ -150,9 +117,10 @@ public class MainActivity2 extends BaseSwipeRefreshActivity<MainPresenter> imple
 
     private void initView() {
 
-        setTitle("Bill~~");
+        setTitle("!");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        mSwipeRefreshLayout.setEnabled(false);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -183,4 +151,20 @@ public class MainActivity2 extends BaseSwipeRefreshActivity<MainPresenter> imple
         recyclerview.setAdapter(mDataAdapter);
     }
 
+
+    @Override
+    public void fillInitData(List mData) {
+        mDataAdapter.insertedAllItem(mData);
+        mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void appendMoreDataToView(List mData) {
+
+    }
+
+    @Override
+    public void hasNoMoreData() {
+
+    }
 }
