@@ -23,13 +23,11 @@ public class MainPresenter extends BasePresenter<IMianView> {
 
     public void getCurrentMonthDatas(){
 
+        mView.fillInitData(DataUtils.getCurrentMonthDatas());
 
-        int datas =  DataUtils.getCurrentMonthDatas();
-        List<Integer> lis_int = new ArrayList<Integer>();
-        for(int i = datas;i>0;i--){
-            lis_int.add(i);
-        }
-        mView.fillInitData(lis_int);
+    }
 
+    public void getNextMonthDatas(){
+        mView.appendMoreDataToView(DataUtils.getNextMonthDatas());
     }
 }

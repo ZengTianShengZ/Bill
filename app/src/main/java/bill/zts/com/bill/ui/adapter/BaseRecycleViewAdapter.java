@@ -2,16 +2,20 @@ package bill.zts.com.bill.ui.adapter;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import bill.zts.com.bill.R;
+import bill.zts.com.bill.ui.domain.DataInfo;
 
 
 /**
@@ -36,6 +40,7 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 	protected int mLayoutId;
 	protected List<T> mDatas;
 	protected LayoutInflater mInflater;
+	protected Map<Integer,Integer> monthMap = new HashMap<>();
 
 	public static final int LAST_POSITION = -1;
 
@@ -57,10 +62,18 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 
  	@Override
 	public int getItemViewType(int position) {
-		if(position == 0){
+		/*if(position == 0){
 			return TYPE_HEAD;
+		}*/
+		if(monthMap.get(getItemCount())!=null){
+			Log.i("monthMap","..........monthMap.........."+monthMap.get(getItemCount()));
+			Log.i("position","..........position.........."+position);
+			if(position+1 == monthMap.get(getItemCount())){
+				return TYPE_HEAD;
+			}
 		}
 		if (position+1  == getItemCount()) {
+			monthMap.put(getItemCount(),getItemCount());
 			return TYPE_BOTTOM;
 		} else {
 			return TYPE_BODY;
@@ -107,7 +120,7 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 	public RecycleViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
 		switch (viewType) {
 			case TYPE_HEAD:
-				return  RecycleViewHolder.get(mContext, parent, R.layout.list_item_head);
+				return  RecycleViewHolder.get(mContext, parent, R.layout.list_item_month_hrad);
 			case TYPE_BODY:
 				return RecycleViewHolder.get(mContext, parent, mLayoutId);
 
@@ -145,8 +158,18 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 		notifyDataSetChanged();
 	}
 	public void appendMoreItem(List<T> data){
-		mDatas.addAll(0,data);
-		notifyDataSetChanged();
+		mDatas.addAll(mDatas.size()-1,data);
+
+		//Cannot call this method while RecyclerView is computing a layout or scrolling
+		// 直接 notifyDataSetChanged 会 抛异常，因为 在 执行 onBindViewHolder 不能 notifyDataSetChanged
+		Handler handler = new Handler(mContext.getMainLooper());
+		final Runnable r = new Runnable() {
+			public void run() {
+			    notifyDataSetChanged();
+			}
+		};
+		handler.post(r);
+		//notifyDataSetChanged();
 	}
 	/**
 	 * 移除一条数据

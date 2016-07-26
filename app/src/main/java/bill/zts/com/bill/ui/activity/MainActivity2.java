@@ -2,6 +2,7 @@ package bill.zts.com.bill.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,10 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bill.zts.com.bill.R;
+import bill.zts.com.bill.presenter.IView.ILoadeMoreDateView;
 import bill.zts.com.bill.presenter.IView.IMianView;
 import bill.zts.com.bill.presenter.IView.IRefreshView;
 import bill.zts.com.bill.presenter.MainPresenter;
 import bill.zts.com.bill.ui.adapter.DataAdapter;
+import bill.zts.com.bill.ui.domain.DataInfo;
 import butterknife.Bind;
 import mvp.zts.com.mvp_base.ui.activity.BaseActivity;
 import mvp.zts.com.mvp_base.ui.activity.BaseSwipeRefreshActivity;
@@ -30,7 +33,8 @@ import mvp.zts.com.mvp_base.ui.activity.BaseSwipeRefreshActivity;
 /**
  * Created by Administrator on 2016/7/25.
  */
-public class MainActivity2 extends BaseActivity<MainPresenter> implements IMianView,NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity2 extends BaseActivity<MainPresenter>
+        implements IMianView,ILoadeMoreDateView,NavigationView.OnNavigationItemSelectedListener {
 
 
     @Bind(R.id.app_bar_SwipeRefreshLayout)
@@ -45,7 +49,7 @@ public class MainActivity2 extends BaseActivity<MainPresenter> implements IMianV
     DrawerLayout mDrawerLayout;
 
     private DataAdapter mDataAdapter;
-    private  List<Integer> lis_int = new ArrayList<Integer>();
+    private  List<DataInfo> lis_int = new ArrayList<DataInfo>();
 
 
     @Override
@@ -64,7 +68,9 @@ public class MainActivity2 extends BaseActivity<MainPresenter> implements IMianV
         super.onCreate(savedInstanceState);
 
         initView();
+        initData();
     }
+
 
     @Override
     protected void initPresenter() {
@@ -74,13 +80,10 @@ public class MainActivity2 extends BaseActivity<MainPresenter> implements IMianV
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         mSwipeRefreshLayout.setRefreshing(true);
-        mPresenter.getCurrentMonthDatas();
+
 
     }
-    @Override
-    protected void intiData() {
 
-    }
 
     @Override
     public void onBackPressed() {
@@ -151,15 +154,23 @@ public class MainActivity2 extends BaseActivity<MainPresenter> implements IMianV
         recyclerview.setAdapter(mDataAdapter);
     }
 
+    private void initData() {
+        mDataAdapter.setILoadeMoreDateView(this);
+        mPresenter.getCurrentMonthDatas();
+    }
 
     @Override
     public void fillInitData(List mData) {
         mDataAdapter.insertedAllItem(mData);
         mSwipeRefreshLayout.setRefreshing(false);
     }
-
+    @Override
+    public void loadMoreDate() {
+        mPresenter.getNextMonthDatas();
+    }
     @Override
     public void appendMoreDataToView(List mData) {
+        mDataAdapter.appendMoreItem(mData);
 
     }
 
@@ -167,4 +178,6 @@ public class MainActivity2 extends BaseActivity<MainPresenter> implements IMianV
     public void hasNoMoreData() {
 
     }
+
+
 }

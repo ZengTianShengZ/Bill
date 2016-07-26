@@ -36,7 +36,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      * init  Presenter
      */
     protected abstract void initPresenter();
-    protected abstract void intiData();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +44,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         mContext = getApplicationContext();
         setContentView(getLayout());
         ButterKnife.bind(this);
-        intiData();
+
         initToolBar();
         initPresenter();
         checkPresenterIsNull();

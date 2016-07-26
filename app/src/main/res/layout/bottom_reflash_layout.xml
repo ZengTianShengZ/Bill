@@ -10,14 +10,27 @@
         android:orientation="horizontal">
 
         <ProgressBar
+            android:id="@+id/pull_to_refresh_load_progress"
+            style="@android:style/Widget.ProgressBar.Small.Inverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="8dp"
+            android:indeterminate="true" />
+
+       <!-- <ProgressBar
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+             android:indeterminateDrawable="@drawable/progressbar_color"/>
+-->
         <TextView
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10pt"
+            android:textSize="@dimen/text_size_15"
             android:text="加载更多......"/>
     </LinearLayout>
 

@@ -28,28 +28,44 @@ public class DataUtils {
 
     }
 
-    public static int getCurrentMonthDatas(){
+    public static  List<DataInfo> getCurrentMonthDatas(){
 
         List<DataInfo> dataInfoList = new ArrayList<DataInfo>();
         for(int d = Day_Count; d>0;d--){
             int int_month = Month_Count+1;
             DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d);
-            System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
+            //System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
+            dataInfoList.add(dataInfo);
         }
-
-        return Day_Count;
+        DataInfo dataInfo = new DataInfo("bottom","bottom","bottom");
+        dataInfoList.add(dataInfo);
+        return dataInfoList;
     }
 
-    public static void getNextMonthDatas(){
-
+    public static List<DataInfo> getNextMonthDatas(){
+        Month_Count--;
+        if(Month_Count == -1){
+            Year_Count--;
+            Month_Count = 11;
+        }
+        mCalendar.set(Year_Count,Month_Count,1);
+        int lastday=mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        List<DataInfo> dataInfoList = new ArrayList<DataInfo>();
+        for(int d = lastday; d>0;d--){
+            int int_month = Month_Count+1;
+            DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d);
+            //System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
+            dataInfoList.add(dataInfo);
+        }
+        return dataInfoList;
     }
 
     public static String getWeek(int int_data) {
 
         mCalendar.set(Year_Count,Month_Count,int_data);
-        System.out.println("..........int_week.........."+Year_Count+"-"+Month_Count+"-"+int_data);
+        //System.out.println("..........int_week.........."+Year_Count+"-"+Month_Count+"-"+int_data);
         int int_week =  mCalendar.get(Calendar.DAY_OF_WEEK);
-        System.out.println("..........int_week.........."+int_week);
+        //System.out.println("..........int_week.........."+int_week);
         return weekDays[int_week-1];
     }
 
