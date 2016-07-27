@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:textColor="#000000"
+        android:text="add new bill"
+        android:textSize="@dimen/text_size_25"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:hint="BIll"
+        android:textSize="@dimen/text_size_20"/>
+
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/edit_bill_addTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:container_enable_drag="false"
+        app:horizontal_interval="4dp"
+        app:vertical_interval="4dp"
+        app:tag_clickable="true"
+        app:tag_theme="pure_teal" />
+
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/edit_bill_defaultTag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:container_enable_drag="true"
+        app:horizontal_interval="10dp"
+        app:vertical_interval="10dp"
+        app:tag_clickable="true"
+        app:tag_theme="pure_teal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/edit_bill_noTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="110dp"
+            android:text="取消"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_18"/>
+        <TextView
+            android:id="@+id/edit_bill_yesTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="确定"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/text_size_18"/>
+
+    </RelativeLayout>
+</LinearLayout>

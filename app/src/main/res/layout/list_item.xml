@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
     android:id="@+id/news_list_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -48,6 +48,14 @@
                 android:layout_gravity="center"
                 android:text="434334.2$"
                 android:textSize="@dimen/text_size_20"/>
+
+            <ImageView
+                android:id="@+id/list_item_edit_bill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_gravity="bottom"
+                android:src="@mipmap/edit_bill"/>
         </LinearLayout>
 
         <LinearLayout
@@ -57,15 +65,38 @@
             android:padding="5dp"
             android:orientation="vertical">
 
-            <TextView
+            <co.lujun.androidtagview.TagContainerLayout
+                android:id="@+id/list_item_tag_bill"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#edb0b0"/>
-            <TextView
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:padding="10dp"
+                app:container_enable_drag="false"
+                app:horizontal_interval="10dp"
+                app:vertical_interval="10dp"
+                app:tag_clickable="true"
+                app:tag_theme="pure_teal" />
+            <!--     <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="40dp"
+                   android:background="#edb0b0"/>
+              <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="90dp"
+                   android:layout_marginTop="5dp"
+                   android:background="#bbe7d3"/>-->
+            <co.lujun.androidtagview.TagContainerLayout
+                android:id="@+id/list_item_tag_bill_menu"
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
                 android:layout_marginTop="5dp"
-                android:background="#bbe7d3"/>
+                android:padding="10dp"
+                app:tag_clickable="false"
+                app:container_enable_drag="true"
+                app:horizontal_interval="10dp"
+                app:vertical_interval="10dp"
+                app:tag_theme="random" />
         </LinearLayout>
     </LinearLayout>
 

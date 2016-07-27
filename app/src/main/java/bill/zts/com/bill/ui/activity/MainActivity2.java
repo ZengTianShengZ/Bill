@@ -2,7 +2,6 @@ package bill.zts.com.bill.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -20,21 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bill.zts.com.bill.R;
-import bill.zts.com.bill.presenter.IView.ILoadeMoreDateView;
+import bill.zts.com.bill.presenter.IView.IAdapterView;
 import bill.zts.com.bill.presenter.IView.IMianView;
-import bill.zts.com.bill.presenter.IView.IRefreshView;
 import bill.zts.com.bill.presenter.MainPresenter;
 import bill.zts.com.bill.ui.adapter.DataAdapter;
 import bill.zts.com.bill.ui.domain.DataInfo;
+import bill.zts.com.bill.ui.fragment.EditBillDialogFragment;
 import butterknife.Bind;
 import mvp.zts.com.mvp_base.ui.activity.BaseActivity;
-import mvp.zts.com.mvp_base.ui.activity.BaseSwipeRefreshActivity;
 
 /**
  * Created by Administrator on 2016/7/25.
  */
 public class MainActivity2 extends BaseActivity<MainPresenter>
-        implements IMianView,ILoadeMoreDateView,NavigationView.OnNavigationItemSelectedListener {
+        implements IMianView,IAdapterView,NavigationView.OnNavigationItemSelectedListener {
 
 
     @Bind(R.id.app_bar_SwipeRefreshLayout)
@@ -163,9 +160,16 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
         mSwipeRefreshLayout.setRefreshing(false);
     }
     @Override
-    public void loadMoreDate() {
+    public void adapterLoadMoreDate() {
         mPresenter.getNextMonthDatas();
     }
+
+    @Override
+    public void adapterEditBill() {
+        EditBillDialogFragment dialog = new EditBillDialogFragment();
+        dialog.show(getFragmentManager(), "loginDialog");
+    }
+
     @Override
     public void appendMoreDataToView(List mData) {
         mDataAdapter.appendMoreItem(mData);

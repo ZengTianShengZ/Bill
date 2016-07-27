@@ -1,17 +1,21 @@
 package bill.zts.com.bill.ui.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
 import bill.zts.com.bill.R;
-import bill.zts.com.bill.presenter.IView.ILoadeMoreDateView;
+import bill.zts.com.bill.presenter.IView.IAdapterView;
 import bill.zts.com.bill.ui.domain.DataInfo;
+import bill.zts.com.bill.ui.fragment.EditBillDialogFragment;
+import co.lujun.androidtagview.ColorFactory;
+import co.lujun.androidtagview.TagContainerLayout;
+import co.lujun.androidtagview.TagView;
 
 
 /**
@@ -20,7 +24,8 @@ import bill.zts.com.bill.ui.domain.DataInfo;
 public class DataAdapter extends BaseRecycleViewAdapter<DataInfo>  {
 
     private Context mContext;
-
+    private String[] str = {"柴酱醋茶","米油","盐","醋茶","柴酱醋茶"};
+    private String[] strnum = {"12","3.5","124.3","5.0","24313.8"};
 
     public DataAdapter(Context context, List<DataInfo> mListItems) {
         super(context, R.layout.list_item, mListItems);
@@ -59,18 +64,61 @@ public class DataAdapter extends BaseRecycleViewAdapter<DataInfo>  {
         TextView item_week_tv = holder.getView( R.id.item_week_tv);
         TextView item_data_tv = holder.getView( R.id.item_data_tv);
         TextView item_bill_tv = holder.getView( R.id.item_bill_tv);
+        ImageView item_edit_bill = holder.getView( R.id.list_item_edit_bill);
 
-        /*if(mMonthMap.get(holderPosition+1)!=null){
-            item_week_tv.setText("!!!!!!!!!!!!!!!!!"+holderPosition);
-        }else {
+        item_edit_bill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( mIAdapterView!= null){
+                    mIAdapterView.adapterEditBill();
+                }
+            }
+        });
 
-            item_week_tv.setText(""+dataInfo.getWeekInfo());
-            item_data_tv.setText(""+dataInfo.getDataInfo());
-        }*/
 
+
+        TagContainerLayout tag_bill_menu =  holder.getView( R.id.list_item_tag_bill_menu);
+        TagContainerLayout tag_bill =  holder.getView( R.id.list_item_tag_bill);
+
+        tag_bill_menu.setTags(str);
+        tag_bill.setTags(strnum);
 
         item_week_tv.setText(""+dataInfo.getWeekInfo());
         item_data_tv.setText(""+dataInfo.getDataInfo());
+
+        item_bill_tv.setTextColor(ColorFactory.onRandomBuild()[0]);
+        // Set customize theme
+        tag_bill_menu.setTheme(ColorFactory.NONE);
+        tag_bill_menu.setTagBackgroundColor(ColorFactory.onRandomBuild()[0]);
+
+        tag_bill_menu.setOnTagClickListener(new TagView.OnTagClickListener() {
+
+            @Override
+            public void onTagClick(int position, String text) {
+                Log.i(".tag_bill_menu..",".............tag_bill_menu...............");
+                Toast.makeText(mContext,""+text,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onTagLongClick(final int position, String text) {
+                Log.i(".tag_bill_menu..",".............tag_bill_menu...........ll....");
+                Toast.makeText(mContext,""+text,Toast.LENGTH_LONG).show();
+            }
+        });
+        tag_bill.setOnTagClickListener(new TagView.OnTagClickListener() {
+
+            @Override
+            public void onTagClick(int position, String text) {
+                Log.i(".tag_bill..",".............tag_bill...............");
+                Toast.makeText(mContext,""+text,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onTagLongClick(final int position, String text) {
+                Log.i(".tag_bill..",".............tag_bill........lll.......");
+                Toast.makeText(mContext,""+text,Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -85,13 +133,13 @@ public class DataAdapter extends BaseRecycleViewAdapter<DataInfo>  {
 
         Log.i("bindBottom","............bindBottom............");
         Toast.makeText(mContext,".....bindBottom......",Toast.LENGTH_LONG).show();
-        if( mILoadeMoreDateView!= null){
-            mILoadeMoreDateView.loadMoreDate();
+        if( mIAdapterView!= null){
+            mIAdapterView.adapterLoadMoreDate();
         }
     }
 
-    private ILoadeMoreDateView mILoadeMoreDateView;
-    public void setILoadeMoreDateView(ILoadeMoreDateView iLoadeMoreDateView){
-        this.mILoadeMoreDateView = iLoadeMoreDateView;
+    private IAdapterView mIAdapterView;
+    public void setILoadeMoreDateView(IAdapterView iLoadeMoreDateView){
+        this.mIAdapterView = iLoadeMoreDateView;
     }
 }
