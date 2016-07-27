@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/add_bill_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginLeft="5dp"
+            android:text="12.3"
+            android:textSize="@dimen/text_size_15"/>
+        <ImageView
+            android:id="@+id/add_bill_deleteImg"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/ic_delete"/>
+    </RelativeLayout>
+
+
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/add_bill_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        app:container_enable_drag="false"
+        app:horizontal_interval="4dp"
+        app:vertical_interval="4dp"
+        app:tag_clickable="false"
+        app:tag_theme="pure_teal" />
+</LinearLayout>

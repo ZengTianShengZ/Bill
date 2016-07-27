@@ -51,8 +51,8 @@
 
             <ImageView
                 android:id="@+id/list_item_edit_bill"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="5dp"
                 android:layout_gravity="bottom"
                 android:src="@mipmap/edit_bill"/>
@@ -69,6 +69,7 @@
                 android:id="@+id/list_item_tag_bill"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
                 android:layout_margin="0dp"
                 android:padding="10dp"
                 app:container_enable_drag="false"
@@ -90,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="20dp"
                 android:padding="10dp"
                 app:tag_clickable="false"
                 app:container_enable_drag="true"

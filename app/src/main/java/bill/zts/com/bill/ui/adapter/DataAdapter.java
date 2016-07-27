@@ -12,7 +12,6 @@ import java.util.List;
 import bill.zts.com.bill.R;
 import bill.zts.com.bill.presenter.IView.IAdapterView;
 import bill.zts.com.bill.ui.domain.DataInfo;
-import bill.zts.com.bill.ui.fragment.EditBillDialogFragment;
 import co.lujun.androidtagview.ColorFactory;
 import co.lujun.androidtagview.TagContainerLayout;
 import co.lujun.androidtagview.TagView;
@@ -21,7 +20,7 @@ import co.lujun.androidtagview.TagView;
 /**
  * Created by Administrator on 2016/5/20.
  */
-public class DataAdapter extends BaseRecycleViewAdapter<DataInfo>  {
+public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
 
     private Context mContext;
     private String[] str = {"柴酱醋茶","米油","盐","醋茶","柴酱醋茶"};

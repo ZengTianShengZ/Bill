@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+   <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -12,12 +16,33 @@
         android:textColor="#000000"
         android:text="add new bill"
         android:textSize="@dimen/text_size_25"/>
-    <EditText
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/edit_bill_RecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:hint="BIll"
-        android:textSize="@dimen/text_size_20"/>
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edit_bill_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:hint="BIll"
+            android:textSize="@dimen/text_size_20"/>
+        <ImageView
+            android:id="@+id/edit_bill_addB_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/add_new_edit"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            />
+    </RelativeLayout>
+
 
     <co.lujun.androidtagview.TagContainerLayout
         android:id="@+id/edit_bill_addTag"
@@ -25,24 +50,43 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:padding="10dp"
         app:container_enable_drag="false"
         app:horizontal_interval="4dp"
         app:vertical_interval="4dp"
         app:tag_clickable="true"
         app:tag_theme="pure_teal" />
 
-    <co.lujun.androidtagview.TagContainerLayout
-        android:id="@+id/edit_bill_defaultTag"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        app:container_enable_drag="true"
-        app:horizontal_interval="10dp"
-        app:vertical_interval="10dp"
-        app:tag_clickable="true"
-        app:tag_theme="pure_teal" />
+        android:layout_marginRight="10dp">
+
+        <co.lujun.androidtagview.TagContainerLayout
+            android:id="@+id/edit_bill_defaultTag"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:padding="10dp"
+            app:container_enable_drag="true"
+            app:horizontal_interval="10dp"
+            app:vertical_interval="10dp"
+            app:tag_clickable="true"
+            app:tag_theme="pure_teal" />
+
+        <ImageView
+            android:id="@+id/edit_bill_addTag_img"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/add_new_edit"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/edit_bill_defaultTag"
+            android:layout_marginRight="10dp"
+            />
+    </RelativeLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -71,3 +115,4 @@
 
     </RelativeLayout>
 </LinearLayout>
+</ScrollView>
