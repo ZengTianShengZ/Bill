@@ -30,8 +30,9 @@
             android:id="@+id/edit_bill_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
             android:padding="15dp"
-            android:hint="BIll"
+            android:hint="money ￥"
             android:textSize="@dimen/text_size_20"/>
         <ImageView
             android:id="@+id/edit_bill_addB_img"

@@ -11,6 +11,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -59,7 +61,7 @@ public class EditBillDialogFragment extends DialogFragment {
     private EditBillAdapter mEditBillAdapter;
     private List<AddBillBean> billList = new ArrayList<AddBillBean>();
 
-    private String[] str1 = {"jiu","米油","盐","醋茶","柴酱醋茶"};
+    private String[] str1 = {"jiu","米油"};
     private String[] str2 = {"柴酱醋茶","柴酱醋茶","米油","盐","醋茶","柴酱醋茶","柴酱醋茶","米油","盐","醋茶","柴酱醋茶"};
 
     public interface DialogFragmentDataImp{//定义一个与Activity通信的接口，使用该DialogFragment的Activity须实现该接口
@@ -150,6 +152,38 @@ public class EditBillDialogFragment extends DialogFragment {
             addBillBean.setTagList(addTag.getTags());
             mEditBillAdapter.insertedItem(addBillBean);
         }
+    }
+    @OnClick(R.id.edit_bill_addTag_img) void addTag_img() {
+        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogLayout = inflater.inflate(R.layout.dialog_custom_tag,null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
+                .setView(dialogLayout);
+        final AlertDialog alertDialog = builder.create();
+
+        final TextView yesTv = (TextView) dialogLayout.findViewById(R.id.custom_tag_yesTv);
+        final EditText tag_edit = (EditText) dialogLayout.findViewById(R.id.custom_tag_edit);
+
+        alertDialog.show();
+
+        tag_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    // 设置 弹出软键盘
+                    alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                }
+            }
+        });
+        yesTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(!TextUtils.isEmpty(tag_edit.getText())){
+                    addTag.addTag(tag_edit.getText()+"");
+                }
+                alertDialog.dismiss();
+            }
+        });
     }
 
 }

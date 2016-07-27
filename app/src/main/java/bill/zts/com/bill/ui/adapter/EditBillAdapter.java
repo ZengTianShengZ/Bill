@@ -28,9 +28,10 @@ public class EditBillAdapter extends BaseRecycleViewAdapter<AddBillBean> {
 
         TextView add_bill_tv = holder.getView( R.id.add_bill_tv);
         ImageView deleteImg = holder.getView( R.id.add_bill_deleteImg);
+
         TagContainerLayout add_bill_tag =  holder.getView( R.id.add_bill_tag);
 
-        add_bill_tv.setText(addBillBean.getStrMoney()+" $");
+        add_bill_tv.setText(addBillBean.getStrMoney()+" ￥");
         add_bill_tag.setTags(addBillBean.getTagList());
 
         deleteImg.setOnClickListener(new View.OnClickListener() {
