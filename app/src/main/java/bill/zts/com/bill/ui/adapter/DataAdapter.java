@@ -60,22 +60,23 @@ public class DataAdapter extends BaseRecycleViewAdapter<DataInfo>  {
         TextView item_data_tv = holder.getView( R.id.item_data_tv);
         TextView item_bill_tv = holder.getView( R.id.item_bill_tv);
 
-        if(monthMap.get(holderPosition+1)!=null){
+        /*if(mMonthMap.get(holderPosition+1)!=null){
             item_week_tv.setText("!!!!!!!!!!!!!!!!!"+holderPosition);
         }else {
 
             item_week_tv.setText(""+dataInfo.getWeekInfo());
             item_data_tv.setText(""+dataInfo.getDataInfo());
-        }
+        }*/
 
 
-
+        item_week_tv.setText(""+dataInfo.getWeekInfo());
+        item_data_tv.setText(""+dataInfo.getDataInfo());
     }
 
     @Override
     public void bindHead(RecycleViewHolder holder, DataInfo dataInfo, int holderPosition) {
-       // TextView item_month_tv = holder.getView( R.id.list_item_month_tv);
-       // item_month_tv.setText("2016-7 ~~~" );
+        TextView item_month_tv = holder.getView( R.id.list_item_month_head_tv);
+        item_month_tv.setText("-------"+dataInfo.getMonthInfo()+"-------");
     }
 
     @Override

@@ -36,7 +36,7 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 	protected int mLayoutId;
 	protected List<T> mDatas;
 	protected LayoutInflater mInflater;
-	protected Map<Integer,Integer> monthMap = new HashMap<>();
+	protected Map<Integer,Integer> mMonthMap = new HashMap<>();
 
 	public static final int LAST_POSITION = -1;
 
@@ -65,11 +65,14 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 
 
 		if (position+1  == getItemCount()) {
-
-			monthMap.put(position+1,getItemCount());
-			Log.i("..monthMap..","........monthMap........."+monthMap.get(position+1));
-			return TYPE_BOTTOM;
+ 			mMonthMap.put(position+1,getItemCount());
+ 			return TYPE_BOTTOM;
 		}
+		// 不知道为什么 getItemViewType 会执行两次， 所以 TYPE_HEAD 判断要放在 TYPE_BOTTOM 的后面，让 TYPE_BOTTOM 先执行
+		if(mMonthMap.get(position+1)!=null){
+ 			return TYPE_HEAD;
+		}
+
 		else {
 
 			return TYPE_BODY;

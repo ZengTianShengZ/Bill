@@ -79,9 +79,7 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        mSwipeRefreshLayout.setRefreshing(true);
-
-
+       // mSwipeRefreshLayout.setRefreshing(true);
     }
 
 

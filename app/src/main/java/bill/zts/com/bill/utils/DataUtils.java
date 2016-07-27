@@ -37,17 +37,23 @@ public class DataUtils {
             //System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
             dataInfoList.add(dataInfo);
         }
-        DataInfo dataInfo = new DataInfo("bottom","bottom","bottom");
+        DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+Month_Count,"bottom","bottom");
         dataInfoList.add(dataInfo);
         return dataInfoList;
     }
 
     public static List<DataInfo> getNextMonthDatas(){
         Month_Count--;
+        int int_month_flag = Month_Count;
+        //Calendar 获取 月份 是 从 0 到 11 的，所以 这么要做一些判断
+        if(Month_Count==0){
+            int_month_flag = 12;
+        }
         if(Month_Count == -1){
             Year_Count--;
             Month_Count = 11;
         }
+
         mCalendar.set(Year_Count,Month_Count,1);
         int lastday=mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         List<DataInfo> dataInfoList = new ArrayList<DataInfo>();
@@ -57,7 +63,7 @@ public class DataUtils {
             //System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
             dataInfoList.add(dataInfo);
         }
-        DataInfo dataInfo = new DataInfo("bottom","bottom","bottom");
+        DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month_flag,"bottom","bottom");
         dataInfoList.add(dataInfo);
         return dataInfoList;
     }

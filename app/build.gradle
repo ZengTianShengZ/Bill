@@ -27,4 +27,5 @@ dependencies {
     compile project(':mvp_base')
     compile 'cn.aigestudio.datepicker:DatePicker:2.2.0'
     compile 'com.android.support:cardview-v7:24.0.0'
+
 }
