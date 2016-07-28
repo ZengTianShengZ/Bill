@@ -6,6 +6,7 @@ import java.util.List;
  * Created by Administrator on 2016/7/27.
  */
 public class AddBillBean {
+
     private String strMoney;
     private List<String> tagList;
 

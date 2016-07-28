@@ -8,15 +8,26 @@ import java.util.List;
  */
 public class DataInfo {
 
+    private String totalMoney;
+
     private String monthInfo;
     private String weekInfo;
     private String dataInfo;
     private List<AddBillBean> billList = new ArrayList<AddBillBean>();
 
-    public DataInfo(String monthInfo, String weekInfo, String dataInfo) {
+    public DataInfo(String monthInfo, String weekInfo, String dataInfo,String totalMoney) {
         this.monthInfo = monthInfo;
         this.weekInfo = weekInfo;
         this.dataInfo = dataInfo;
+        this.totalMoney = totalMoney;
+    }
+
+    public String getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(String totalMoney) {
+        this.totalMoney = totalMoney;
     }
 
     public String getMonthInfo() {

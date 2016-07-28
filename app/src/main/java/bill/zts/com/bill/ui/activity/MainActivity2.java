@@ -11,9 +11,11 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ import bill.zts.com.bill.ui.adapter.RecycleViewHolder;
 import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
 import bill.zts.com.bill.ui.fragment.EditBillDialogFragment;
+import bill.zts.com.bill.utils.NumAnim;
 import butterknife.Bind;
 import co.lujun.androidtagview.TagContainerLayout;
 import mvp.zts.com.mvp_base.ui.activity.BaseActivity;
@@ -200,20 +203,33 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
            // mDataAdapter.notifyItemChanged(editAdapterItemPosition,billList);
            // mDataAdapter.getAdapterDatas().get(editAdapterItemPosition).getBillList().addAll(billList);
 
-            lis_int.get(editAdapterItemPosition).getBillList().addAll(billList);
-            Log.i("..getBillList..","......size........."+lis_int.get(editAdapterItemPosition).getBillList().size());
+            //  lis_int.get(editAdapterItemPosition).getBillList().addAll(billList);
+
+            DataInfo mDataInfo =  lis_int.get(editAdapterItemPosition) ;
+            mDataInfo.getBillList().addAll(billList);
 
             RecycleViewHolder viewHolder  = (RecycleViewHolder) mRecyclerview.findViewHolderForAdapterPosition(editAdapterItemPosition);
             TagContainerLayout bill_menu = viewHolder.getView(R.id.list_item_tag_bill_menu);
             TagContainerLayout tag_bill =  viewHolder.getView( R.id.list_item_tag_bill);
+            TextView item_bill_tv = viewHolder.getView( R.id.item_bill_tv);
 
+
+            float float_moneys = 0;
             for(AddBillBean addBillBean:billList){
                 tag_bill.addTag(addBillBean.getStrMoney()+"");
-
+                Float float_money = new Float(addBillBean.getStrMoney());
+                float_moneys += float_money;
                 for(String tag:addBillBean.getTagList()){
                     bill_menu.addTag(tag);
                 }
             }
+            if(!TextUtils.isEmpty(item_bill_tv.getText())){
+                Float float_money = new Float(item_bill_tv.getText()+"");
+                float_moneys += float_money;
+            }
+
+            mDataInfo.setTotalMoney(float_moneys+"");
+            NumAnim.startAnim(item_bill_tv,float_moneys);
 
             Log.i("getDialogBillList","........billList......."+billList.get(0).getStrMoney());
             Log.i("getDialogBillList","........billList......."+billList.size());

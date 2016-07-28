@@ -19,7 +19,7 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
 
-        System.out.println(".........addition_isCorrect......");
+       /* System.out.println(".........addition_isCorrect......");
 
 
         Calendar c= Calendar.getInstance();//获取当前日期
@@ -87,7 +87,7 @@ public class ExampleUnitTest {
         System.out.println(".........Calendar......"+year1213+".."+month1213+"..."+day1213+"..."+lastday1213+"..."+week1213);
 
 
-        DataUtils.getCurrentMonthDatas();
+        DataUtils.getCurrentMonthDatas();*/
 
 
      /*   java.util.Date dddd = new java.util.Date();
@@ -104,18 +104,5 @@ public class ExampleUnitTest {
         System.out.println(".........Calendar......"+year1+".."+month1+"..."+day1+"..."+lastday1);
 */
     }
-    public static String getWeekOfDate(Date dt) {
-        String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dt);
 
-        int w = cal.get(Calendar.DAY_OF_WEEK) - 1;
-        if (w < 0)
-            w = 0;
-
-        return weekDays[w];
-    }
-    public static void getCurrentData(){
-        Calendar cal_1= Calendar.getInstance();//获取当前日期
-    }
 }

@@ -33,11 +33,11 @@ public class DataUtils {
         List<DataInfo> dataInfoList = new ArrayList<DataInfo>();
         for(int d = Day_Count; d>0;d--){
             int int_month = Month_Count+1;
-            DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d);
+            DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d,"0");
             //System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
             dataInfoList.add(dataInfo);
         }
-        DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+Month_Count,"bottom","bottom");
+        DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+Month_Count,"bottom","bottom","0");
         dataInfoList.add(dataInfo);
         return dataInfoList;
     }
@@ -59,11 +59,11 @@ public class DataUtils {
         List<DataInfo> dataInfoList = new ArrayList<DataInfo>();
         for(int d = lastday; d>0;d--){
             int int_month = Month_Count+1;
-            DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d);
+            DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d,"0");
             //System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
             dataInfoList.add(dataInfo);
         }
-        DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month_flag,"bottom","bottom");
+        DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month_flag,"bottom","bottom","0");
         dataInfoList.add(dataInfo);
         return dataInfoList;
     }

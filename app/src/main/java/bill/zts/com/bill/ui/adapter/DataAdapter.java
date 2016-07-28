@@ -14,6 +14,7 @@ import bill.zts.com.bill.R;
 import bill.zts.com.bill.presenter.IView.IAdapterView;
 import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
+import bill.zts.com.bill.utils.NumAnim;
 import co.lujun.androidtagview.ColorFactory;
 import co.lujun.androidtagview.TagContainerLayout;
 import co.lujun.androidtagview.TagView;
@@ -25,8 +26,8 @@ import co.lujun.androidtagview.TagView;
 public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
 
     private Context mContext;
-    private String[] str = {"柴酱醋茶"};
-    private String[] strnum = {"11111"};
+    private String[] str_bill = {"今","天","花","了","0元","！","！","！"};
+    private String[] str_bill_menu = {"快点","来","记账","吧","！","！","！"};
 
     public DataAdapter(Context context, List<DataInfo> mListItems) {
         super(context, R.layout.list_item, mListItems);
@@ -74,6 +75,9 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
         item_week_tv.setText(""+dataInfo.getWeekInfo());
         item_data_tv.setText(""+dataInfo.getDataInfo());
 
+        tag_bill.setTags(str_bill);
+        tag_bill_menu.setTags(str_bill_menu);
+
         if(null != dataInfo.getBillList()){
             List<String> billList = new ArrayList<String>();
             //String[] strTags = new String[dataInfo.getBillList().size()] ;
@@ -92,8 +96,11 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
 
         }
 
+        // 要随机颜色 可以 到 ColorFactory 自己设置一组 颜色
+        item_bill_tv.setTextColor(ColorFactory.onRandomBuild()[1]);
+        item_bill_tv.setText(dataInfo.getTotalMoney()+"");
 
-        item_bill_tv.setTextColor(ColorFactory.onRandomBuild()[0]);
+
         // Set customize theme
         tag_bill_menu.setTheme(ColorFactory.NONE);
         tag_bill_menu.setTagBackgroundColor(ColorFactory.onRandomBuild()[0]);

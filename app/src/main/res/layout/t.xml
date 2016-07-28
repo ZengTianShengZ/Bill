@@ -5,15 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <co.lujun.androidtagview.TagContainerLayout
-        android:layout_width="match_parent"
+    <bill.zts.com.bill.utils.view.CircleTextView
+        android:id="@+id/circleTextview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="0dp"
-        android:padding="10dp"
-        app:container_enable_drag="false"
-        app:horizontal_interval="10dp"
-        app:vertical_interval="10dp"
-        app:tag_clickable="true"
-        app:tag_theme="pure_teal" />
+        android:gravity="center"
+        android:text=" hello_world" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
+         >
+
+        <bill.zts.com.bill.utils.view.CircleImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            android:background="#5c4444"
+            android:src="@drawable/round_tv_bg"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#5c4444" />
+
+    </RelativeLayout>
 </LinearLayout>

@@ -30,32 +30,54 @@
                 android:layout_gravity="center"
                 android:text="星期二"/>
 
-            <TextView
-                android:id="@+id/item_data_tv"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_gravity="center"
-                android:padding="10dp"
-                android:background="@drawable/round_tv_bg"
-                android:textSize="@dimen/text_size_30"
-                android:text="3"/>
-            <TextView
-                android:id="@+id/item_bill_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center"
-                android:text="434334.2$"
-                android:textSize="@dimen/text_size_20"/>
+                android:padding="5dp">
+                <bill.zts.com.bill.utils.view.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/profile_image"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="#d7a9a9"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="#868484"/>
 
-            <ImageView
-                android:id="@+id/list_item_edit_bill"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="5dp"
-                android:layout_gravity="bottom"
-                android:src="@mipmap/edit_bill"/>
+                <TextView
+                    android:id="@+id/item_data_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="@dimen/text_size_30"
+                    android:textColor="#000000"
+                    android:text="3"/>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_bill_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textSize="@dimen/text_size_20"/>
+                <TextView
+                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" ￥"
+                    android:textSize="@dimen/text_size_20"/>
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -75,25 +97,42 @@
                 app:container_enable_drag="false"
                 app:horizontal_interval="10dp"
                 app:vertical_interval="10dp"
-                app:tag_clickable="true"
+                app:tag_clickable="false"
                 app:tag_theme="pure_teal" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"/>
 
-            <co.lujun.androidtagview.TagContainerLayout
-                android:id="@+id/list_item_tag_bill_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="0dp"
-                android:padding="10dp"
-                app:tag_clickable="false"
-                app:container_enable_drag="true"
-                app:horizontal_interval="10dp"
-                app:vertical_interval="10dp"
-                app:tag_theme="random" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <co.lujun.androidtagview.TagContainerLayout
+                    android:id="@+id/list_item_tag_bill_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="0dp"
+                    android:padding="10dp"
+                    app:tag_clickable="true"
+                    app:container_enable_drag="true"
+                    app:horizontal_interval="10dp"
+                    app:vertical_interval="10dp"
+                    app:tag_theme="random" />
+
+            </RelativeLayout>
+
         </LinearLayout>
     </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/list_item_edit_bill"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="bottom"
+        android:src="@mipmap/edit_bill"/>
 
 </android.support.v7.widget.CardView>
