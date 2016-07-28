@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -19,25 +20,30 @@ import java.util.List;
 
 import bill.zts.com.bill.R;
 import bill.zts.com.bill.presenter.IView.IAdapterView;
+import bill.zts.com.bill.presenter.IView.IBillDialogFragmentView;
 import bill.zts.com.bill.presenter.IView.IMianView;
 import bill.zts.com.bill.presenter.MainPresenter;
 import bill.zts.com.bill.ui.adapter.DataAdapter;
+import bill.zts.com.bill.ui.adapter.RecycleViewHolder;
+import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
 import bill.zts.com.bill.ui.fragment.EditBillDialogFragment;
 import butterknife.Bind;
+import co.lujun.androidtagview.TagContainerLayout;
 import mvp.zts.com.mvp_base.ui.activity.BaseActivity;
 
 /**
  * Created by Administrator on 2016/7/25.
  */
 public class MainActivity2 extends BaseActivity<MainPresenter>
-        implements IMianView,IAdapterView,NavigationView.OnNavigationItemSelectedListener {
+        implements IMianView,IAdapterView,NavigationView.OnNavigationItemSelectedListener,
+        IBillDialogFragmentView {
 
 
     @Bind(R.id.app_bar_SwipeRefreshLayout)
     SwipeRefreshLayout mSwipeRefreshLayout;
     @Bind(R.id.recyclerview)
-    RecyclerView recyclerview;
+    RecyclerView mRecyclerview;
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.fab)
@@ -45,8 +51,11 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
 
+    private EditBillDialogFragment mEditBillDialog;
+
     private DataAdapter mDataAdapter;
     private  List<DataInfo> lis_int = new ArrayList<DataInfo>();
+    private int editAdapterItemPosition;
 
 
     @Override
@@ -58,7 +67,6 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
     protected int getLayout() {
         return R.layout.activity_main;
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,23 +144,24 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
         initRecycleView();
     }
 
     private void initRecycleView() {
-        recyclerview.setHasFixedSize(false);
+        mRecyclerview.setHasFixedSize(false);
         LinearLayoutManager llm = new LinearLayoutManager(mContext);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerview.setLayoutManager(llm);
+        mRecyclerview.setLayoutManager(llm);
         mDataAdapter = new DataAdapter(mContext,lis_int);
-        recyclerview.setAdapter(mDataAdapter);
+        mRecyclerview.setAdapter(mDataAdapter);
+
     }
 
     private void initData() {
         mDataAdapter.setILoadeMoreDateView(this);
         mPresenter.getCurrentMonthDatas();
     }
+
 
     @Override
     public void fillInitData(List mData) {
@@ -165,9 +174,12 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
     }
 
     @Override
-    public void adapterEditBill() {
-        EditBillDialogFragment dialog = new EditBillDialogFragment();
-        dialog.show(getFragmentManager(), "loginDialog");
+    public void adapterEditBill(int holderPosition) {
+        this.editAdapterItemPosition = holderPosition;
+        mEditBillDialog = new EditBillDialogFragment();
+        mEditBillDialog.setIBillDialogFragmentView(this);
+        mEditBillDialog.show(getFragmentManager(), "loginDialog");
+
     }
 
     @Override
@@ -181,5 +193,30 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
 
     }
 
+    @Override
+    public void getDialogBillList(List<AddBillBean> billList) {
+        mEditBillDialog.dismiss();
+        if(null != billList){
+           // mDataAdapter.notifyItemChanged(editAdapterItemPosition,billList);
+           // mDataAdapter.getAdapterDatas().get(editAdapterItemPosition).getBillList().addAll(billList);
 
+            lis_int.get(editAdapterItemPosition).getBillList().addAll(billList);
+            Log.i("..getBillList..","......size........."+lis_int.get(editAdapterItemPosition).getBillList().size());
+
+            RecycleViewHolder viewHolder  = (RecycleViewHolder) mRecyclerview.findViewHolderForAdapterPosition(editAdapterItemPosition);
+            TagContainerLayout bill_menu = viewHolder.getView(R.id.list_item_tag_bill_menu);
+            TagContainerLayout tag_bill =  viewHolder.getView( R.id.list_item_tag_bill);
+
+            for(AddBillBean addBillBean:billList){
+                tag_bill.addTag(addBillBean.getStrMoney()+"");
+
+                for(String tag:addBillBean.getTagList()){
+                    bill_menu.addTag(tag);
+                }
+            }
+
+            Log.i("getDialogBillList","........billList......."+billList.get(0).getStrMoney());
+            Log.i("getDialogBillList","........billList......."+billList.size());
+        }
+    }
 }

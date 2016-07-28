@@ -86,5 +86,9 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter<Rec
 		}
 	}
 
+	public List<T> getAdapterDatas(){
+		return mDatas;
+	}
+
 
 }

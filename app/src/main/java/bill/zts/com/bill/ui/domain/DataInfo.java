@@ -1,5 +1,8 @@
 package bill.zts.com.bill.ui.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Administrator on 2016/7/26.
  */
@@ -8,6 +11,7 @@ public class DataInfo {
     private String monthInfo;
     private String weekInfo;
     private String dataInfo;
+    private List<AddBillBean> billList = new ArrayList<AddBillBean>();
 
     public DataInfo(String monthInfo, String weekInfo, String dataInfo) {
         this.monthInfo = monthInfo;
@@ -37,5 +41,13 @@ public class DataInfo {
 
     public void setWeekInfo(String weekInfo) {
         this.weekInfo = weekInfo;
+    }
+
+    public List<AddBillBean> getBillList() {
+        return billList;
+    }
+
+    public void setBillList(List<AddBillBean> billList) {
+        this.billList = billList;
     }
 }

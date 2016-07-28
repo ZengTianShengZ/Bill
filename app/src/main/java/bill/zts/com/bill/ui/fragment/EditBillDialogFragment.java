@@ -1,5 +1,6 @@
 package bill.zts.com.bill.ui.fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import bill.zts.com.bill.R;
+import bill.zts.com.bill.presenter.EditBillPresenter;
+import bill.zts.com.bill.presenter.IView.IBillDialogFragmentView;
+import bill.zts.com.bill.presenter.IView.IEditBillView;
 import bill.zts.com.bill.ui.adapter.DataAdapter;
 import bill.zts.com.bill.ui.adapter.EditBillAdapter;
 import bill.zts.com.bill.ui.domain.AddBillBean;
@@ -38,7 +43,7 @@ import mvp.zts.com.mvp_base.utils.SnackbarUtil;
 /**
  * Created by Administrator on 2016/7/27.
  */
-public class EditBillDialogFragment extends DialogFragment {
+public class EditBillDialogFragment extends DialogFragment implements IEditBillView {
 
     @Bind(R.id.edit_bill_noTv)
     TextView noTv;
@@ -57,16 +62,21 @@ public class EditBillDialogFragment extends DialogFragment {
     @Bind(R.id.edit_bill_RecyclerView)
     RecyclerView mRecyclerView;
 
+    private View customView;
+
     private Context mContext;
     private EditBillAdapter mEditBillAdapter;
     private List<AddBillBean> billList = new ArrayList<AddBillBean>();
+    private EditBillPresenter mEditBillPresenter;
 
     private String[] str1 = {"jiu","米油"};
     private String[] str2 = {"柴酱醋茶","柴酱醋茶","米油","盐","醋茶","柴酱醋茶","柴酱醋茶","米油","盐","醋茶","柴酱醋茶"};
 
-    public interface DialogFragmentDataImp{//定义一个与Activity通信的接口，使用该DialogFragment的Activity须实现该接口
-        void showMessage(String message);
+    private IBillDialogFragmentView mIBillDialogFragmentView;
+    public void setIBillDialogFragmentView(IBillDialogFragmentView mIBillDialogFragmentView){
+        this.mIBillDialogFragmentView = mIBillDialogFragmentView;
     }
+
 
     public static EditBillDialogFragment newInstance(String message){
         //创建一个带有参数的Fragment实例
@@ -77,17 +87,25 @@ public class EditBillDialogFragment extends DialogFragment {
         return fragment;
     }
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View customView = LayoutInflater.from(getActivity()).inflate(
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
+        customView = LayoutInflater.from(getActivity()).inflate(
                 R.layout.fragment_edit_bill_dialog, null);
         ButterKnife.bind(this,customView);
         mContext = getActivity();
 
+        mEditBillPresenter = new EditBillPresenter((Activity) mContext,this);
+
         initView();
 
+        return customView;
+    }
+ /*    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         return new AlertDialog.Builder(getActivity()).setView(customView)
                 .create();
-    }
+    }*/
 
     private void initView() {
         initRecycleView();
@@ -135,12 +153,28 @@ public class EditBillDialogFragment extends DialogFragment {
 
 
     @OnClick(R.id.edit_bill_yesTv) void yesTv() {
-        dismiss();
+
+
+
+            mEditBillPresenter.setAddBillList(mEditBillAdapter.getAdapterDatas(),editMoney.getText()+"",addTag.getTags());
+
+           /* if(0 != mEditBillAdapter.getItemCount()){
+
+            }else{
+                if(TextUtils.isEmpty(editMoney.getText())){
+                    SnackbarUtil.PrimarySnackbar(mContext,noTv,"   你的Money不能为空!!!");
+                }else {
+                    AddBillBean addBillBean = new AddBillBean();
+                    addBillBean.setStrMoney(editMoney.getText()+"");
+                    addBillBean.setTagList(addTag.getTags());
+                    mEditBillAdapter.insertedItem(addBillBean);
+                }
+            }*/
+
+
     }
     @OnClick(R.id.edit_bill_noTv) void noTv() {
-        //DialogFragmentDataImp imp = (DialogFragmentDataImp) getActivity();
-        //imp.showMessage(getArguments().getString("message"));//对话框与Activity间通信，传递数据给实现了DialogFragmentDataImp接口的Activity
-        dismiss();
+         dismiss();
     }
     @OnClick(R.id.edit_bill_addB_img) void addB_img() {
 
@@ -186,5 +220,20 @@ public class EditBillDialogFragment extends DialogFragment {
         });
     }
 
+    @Override
+    public void getAddBillList(List<AddBillBean> billList) {
+        //dismiss();
+        if(mIBillDialogFragmentView!= null){
+            mIBillDialogFragmentView.getDialogBillList(billList);
+        }
+
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        billList.clear();
+    }
 }
 

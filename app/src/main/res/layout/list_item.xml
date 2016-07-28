@@ -77,21 +77,16 @@
                 app:vertical_interval="10dp"
                 app:tag_clickable="true"
                 app:tag_theme="pure_teal" />
-            <!--     <TextView
-                   android:layout_width="match_parent"
-                   android:layout_height="40dp"
-                   android:background="#edb0b0"/>
-              <TextView
-                   android:layout_width="match_parent"
-                   android:layout_height="90dp"
-                   android:layout_marginTop="5dp"
-                   android:background="#bbe7d3"/>-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"/>
+
             <co.lujun.androidtagview.TagContainerLayout
                 android:id="@+id/list_item_tag_bill_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
-                android:layout_marginTop="20dp"
                 android:padding="10dp"
                 app:tag_clickable="false"
                 app:container_enable_drag="true"

@@ -182,6 +182,8 @@ public abstract class BaseTypeRecycleViewAdapter<T> extends RecyclerView.Adapter
 
 		}
 	}
-
+	public List<T> getAdapterDatas(){
+		return mDatas;
+	}
 
 }

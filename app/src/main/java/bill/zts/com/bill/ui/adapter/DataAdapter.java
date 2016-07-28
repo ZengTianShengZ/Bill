@@ -7,10 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import bill.zts.com.bill.R;
 import bill.zts.com.bill.presenter.IView.IAdapterView;
+import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
 import co.lujun.androidtagview.ColorFactory;
 import co.lujun.androidtagview.TagContainerLayout;
@@ -23,8 +25,8 @@ import co.lujun.androidtagview.TagView;
 public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
 
     private Context mContext;
-    private String[] str = {"柴酱醋茶","米油","盐","醋茶","柴酱醋茶"};
-    private String[] strnum = {"12","3.5","124.3","5.0","24313.8"};
+    private String[] str = {"柴酱醋茶"};
+    private String[] strnum = {"11111"};
 
     public DataAdapter(Context context, List<DataInfo> mListItems) {
         super(context, R.layout.list_item, mListItems);
@@ -58,37 +60,52 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
 */
 
     @Override
-    public void bindBody(RecycleViewHolder holder, DataInfo dataInfo, int holderPosition) {
+    public void bindBody(RecycleViewHolder holder, DataInfo dataInfo, final int holderPosition) {
 
+        // 这边有 holder.getView 重内存获取view 所以 一直 getView 是不会造成 屏幕闪动或性能影响的
         TextView item_week_tv = holder.getView( R.id.item_week_tv);
         TextView item_data_tv = holder.getView( R.id.item_data_tv);
         TextView item_bill_tv = holder.getView( R.id.item_bill_tv);
         ImageView item_edit_bill = holder.getView( R.id.list_item_edit_bill);
 
-        item_edit_bill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if( mIAdapterView!= null){
-                    mIAdapterView.adapterEditBill();
-                }
-            }
-        });
-
-
-
-        TagContainerLayout tag_bill_menu =  holder.getView( R.id.list_item_tag_bill_menu);
         TagContainerLayout tag_bill =  holder.getView( R.id.list_item_tag_bill);
-
-        tag_bill_menu.setTags(str);
-        tag_bill.setTags(strnum);
+        TagContainerLayout tag_bill_menu =  holder.getView( R.id.list_item_tag_bill_menu);
 
         item_week_tv.setText(""+dataInfo.getWeekInfo());
         item_data_tv.setText(""+dataInfo.getDataInfo());
+
+        if(null != dataInfo.getBillList()){
+            List<String> billList = new ArrayList<String>();
+            //String[] strTags = new String[dataInfo.getBillList().size()] ;
+            List<String> strTags = new ArrayList<String>();
+            int i = 0;
+            for(AddBillBean billBean:dataInfo.getBillList()) {
+
+                strTags.add(billBean.getStrMoney()+" ￥");
+                billList.addAll(billBean.getTagList());
+
+            }
+            tag_bill.setTags(strTags);
+            tag_bill_menu.setTags(billList);
+            strTags.clear();
+            billList.clear();
+
+        }
+
 
         item_bill_tv.setTextColor(ColorFactory.onRandomBuild()[0]);
         // Set customize theme
         tag_bill_menu.setTheme(ColorFactory.NONE);
         tag_bill_menu.setTagBackgroundColor(ColorFactory.onRandomBuild()[0]);
+
+        item_edit_bill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( mIAdapterView!= null){
+                    mIAdapterView.adapterEditBill(holderPosition);
+                }
+            }
+        });
 
         tag_bill_menu.setOnTagClickListener(new TagView.OnTagClickListener() {
 

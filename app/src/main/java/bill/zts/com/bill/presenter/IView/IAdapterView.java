@@ -5,5 +5,5 @@ package bill.zts.com.bill.presenter.IView;
  */
 public interface IAdapterView {
     void adapterLoadMoreDate();
-    void adapterEditBill();
+    void adapterEditBill(int holderPosition);
 }
