@@ -68,6 +68,12 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
     @Override
     public void bindBody(RecycleViewHolder holder, DataInfo dataInfo, final int holderPosition) {
 
+
+
+        TextView test_tv = holder.getView( R.id.test_tv);
+        test_tv.setText(dataInfo.getTestStr()+"");
+
+
         // 这边有 holder.getView 重内存获取view 所以 一直 getView 是不会造成 屏幕闪动或性能影响的
         TextView item_week_tv = holder.getView( R.id.item_week_tv);
         TextView item_data_tv = holder.getView( R.id.item_data_tv);
@@ -78,7 +84,7 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
         TagContainerLayout tag_bill_menu =  holder.getView( R.id.list_item_tag_bill_menu);
 
         item_week_tv.setText(""+dataInfo.getWeekInfo());
-        item_data_tv.setText(""+dataInfo.getDataInfo());
+        item_data_tv.setText(""+dataInfo.getDayInfo());
 
 
         tag_bill.setTags(str_bill);

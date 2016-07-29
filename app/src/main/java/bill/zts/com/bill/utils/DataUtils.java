@@ -1,11 +1,18 @@
 package bill.zts.com.bill.utils;
 
+import android.util.Log;
+
+import org.litepal.crud.DataSupport;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
+import bill.zts.com.bill.ui.domain.SqBill;
+import bill.zts.com.bill.ui.domain.SqBillItem;
 
 /**
  * Created by Administrator on 2016/7/25.
@@ -33,11 +40,45 @@ public class DataUtils {
         List<DataInfo> dataInfoList = new ArrayList<DataInfo>();
         for(int d = Day_Count; d>0;d--){
             int int_month = Month_Count+1;
-            DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d,"0");
-            //System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(Year_Count);
+            stringBuilder.append(int_month);
+            stringBuilder.append(d);
+
+            int intData = Integer.parseInt(stringBuilder.toString());
+
+            DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d,"0",intData);
+
+            //  sq 数据库查询  ////////////////////////////////////////////////////////////////
+            List<SqBill> sqBills =   DataSupport.where("intDay = ?",intData+"").find(SqBill.class);
+
+            //SqBill sqBill = (SqBill) DataSupport.where("intDay = ?",intData+"").find(SqBill.class);
+            //SqBill sqBill = DataSupport.find(SqBill.class, intData);
+            Log.i("sqBill++++",".......sqBill fffffffffffffffff................."+sqBills);
+            if(0!= sqBills.size()){
+                Log.i("sqBill++++",".......sqBill fffffffffffffffff................."+sqBills.get(0));
+                SqBill sqBill = sqBills.get(0);
+                dataInfo.setTotalMoney(sqBill.getTotalMoney());
+                dataInfo.setTestStr(sqBill.getTestStr()+"");
+
+                List<AddBillBean> billBeen = new ArrayList<AddBillBean>();
+                for(SqBillItem sqBillItem:sqBill.getBillList()){
+                    AddBillBean addBillBean = new AddBillBean();
+                    addBillBean.setStrMoney(sqBillItem.getStrMoney());
+                    addBillBean.setTagList(sqBillItem.getTagList());
+
+                    billBeen.add(addBillBean);
+                }
+                dataInfo.setBillList(billBeen);
+            }
+
+            ////////////////////////////////////////////////////////////////////////////////
+
             dataInfoList.add(dataInfo);
         }
-        DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+Month_Count,"bottom","bottom","0");
+
+        DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+Month_Count,"bottom","bottom","0",0);
         dataInfoList.add(dataInfo);
         return dataInfoList;
     }
@@ -59,11 +100,19 @@ public class DataUtils {
         List<DataInfo> dataInfoList = new ArrayList<DataInfo>();
         for(int d = lastday; d>0;d--){
             int int_month = Month_Count+1;
-            DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d,"0");
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(Year_Count);
+            stringBuilder.append(int_month);
+            stringBuilder.append(d);
+
+            int intData = Integer.parseInt(stringBuilder.toString());
+
+            DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d,"0",intData);
             //System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
             dataInfoList.add(dataInfo);
         }
-        DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month_flag,"bottom","bottom","0");
+        DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month_flag,"bottom","bottom","0",0);
         dataInfoList.add(dataInfo);
         return dataInfoList;
     }

@@ -1,5 +1,6 @@
 package bill.zts.com.bill.ui.activity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,9 +12,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,8 @@ import bill.zts.com.bill.ui.adapter.DataAdapter;
 import bill.zts.com.bill.ui.adapter.RecycleViewHolder;
 import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
+import bill.zts.com.bill.ui.domain.SqBill;
+import bill.zts.com.bill.ui.domain.SqBillItem;
 import bill.zts.com.bill.ui.fragment.EditBillDialogFragment;
 import bill.zts.com.bill.utils.NumAnim;
 import butterknife.Bind;
@@ -194,7 +200,6 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
 
     }
 
-
     @Override
     public void getDialogBillList(List<AddBillBean> billList) {
         mEditBillDialog.dismiss();
@@ -208,29 +213,94 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
             TagContainerLayout tag_bill =  viewHolder.getView( R.id.list_item_tag_bill);
             TextView item_bill_tv = viewHolder.getView( R.id.item_bill_tv);
 
-            //float float_moneys = 0;
+            float total_money = mDataAdapter.computeTotleMoney(editAdapterItemPosition);
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+
+            List<SqBill> sqBills =   DataSupport.where("intDay = ?",mDataInfo.getIntData()+"").find(SqBill.class);
+            //SqBill sqBill = DataSupport.find(SqBill.class, mDataInfo.getIntData());
+
+            int id = 0;
+            if(0 == sqBills.size()){
+                SqBill newSqBill = new  SqBill();
+                newSqBill.save();
+                id = newSqBill.getId();
+
+                setDataSql(newSqBill,id,billList);
+
+            }else {
+                SqBill sqBill = sqBills.get(0);
+                setDataSql(sqBill,id,billList);
+            }
+
+          /*
+            if(0 == sqBills.size()){
+                SqBill newSqBill = new  SqBill();
+                 newSqBill.setTotalMoney(total_money+"");
+                newSqBill.setIntDay(mDataInfo.getIntData());
+                newSqBill.setId(mDataInfo.getIntData());
+                boolean b = newSqBill.save();
+
+                 Log.i("SqBill","............boolean.............."+b);
+
+                List<SqBillItem>   sqBillItemList = new ArrayList<SqBillItem>();
+
+                for (AddBillBean addBillBean:billList){
+                    SqBillItem sqBillItem = new SqBillItem();
+                    sqBillItem.setSqBill(newSqBill);
+
+                    sqBillItem.setStrMoney(addBillBean.getStrMoney());
+                    sqBillItem.setTagList(addBillBean.getTagList());
+
+                    sqBillItemList.add(sqBillItem);
+                }
+                 DataSupport.saveAll(sqBillItemList);
+
+                SqBill sqBill = DataSupport.find(SqBill.class, newSqBill.getId());
+                Log.i("SqBill","............find......+++++++++++++++...getId....."+ newSqBill.getId());
+                Log.i("SqBill","............find......+++++++++++++++........"+sqBill);
+
+            }else {
+                SqBill sqBill = sqBills.get(0);
+                int id = sqBill.getId();
+                Log.i("SqBill","............getId.... ........"+id);
+                List<SqBillItem>   sqBillItemList = new ArrayList<SqBillItem>();
+                for (AddBillBean addBillBean:billList){
+                    SqBillItem sqBillItem = new SqBillItem();
+                    sqBillItem.setSqBill(sqBill);
+
+                    sqBillItem.setStrMoney(addBillBean.getStrMoney());
+                    sqBillItem.setTagList(addBillBean.getTagList());
+
+                    sqBillItemList.add(sqBillItem);
+                }
+                DataSupport.saveAll(sqBillItemList);
+                sqBill.setTotalMoney(total_money+"");
+                //sqBill.setBillList(sqBillItemList);
+                sqBill.update(id);
+                Log.i("SqBill","............getId.... +++++++++++++++++++++++++++........"+id);
+            }*/
+
+        ///////////////////////////////////////////////////////////////////////////////////////////
+
             for(AddBillBean addBillBean:billList){
                 tag_bill.addTag(addBillBean.getStrMoney()+"");
-                //Float float_money = new Float(addBillBean.getStrMoney());
-                //float_moneys += float_money;
+
                 for(String tag:addBillBean.getTagList()){
                     bill_menu.addTag(tag);
                 }
             }
-            /*if(!TextUtils.isEmpty(item_bill_tv.getText())){
-                Float float_money = new Float(item_bill_tv.getText()+"");
-                float_moneys += float_money;
-            }*/
 
-            //mDataInfo.setTotalMoney(float_moneys+"");
-            /*float float_moneys = mDataAdapter.computeTotleMoney(editAdapterItemPosition);
-            mDataInfo.setTotalMoney(float_moneys+"");
-            NumAnim.startAnim(item_bill_tv,float_moneys);*/
 
             // 刷新  money 总数
-            NumAnim.startAnim(item_bill_tv,mDataAdapter.computeTotleMoney(editAdapterItemPosition));
+            NumAnim.startAnim(item_bill_tv,total_money);
 
             mDataAdapter.setTagOnLongClick(tag_bill,bill_menu, item_bill_tv, mDataInfo.getBillList(), editAdapterItemPosition);
         }
+    }
+
+    private void setDataSql(SqBill sqBill,int id,List<AddBillBean> billList){
+        sqBill.setTestStr(billList.get(0).getStrMoney()+"");
+        sqBill.update(id);
     }
 }

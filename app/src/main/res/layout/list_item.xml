@@ -128,4 +128,12 @@
         android:layout_gravity="bottom"
         android:src="@mipmap/edit_bill"/>
 
+    <TextView
+        android:id="@+id/test_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_30"
+        android:layout_gravity="bottom"
+        android:text="y"/>
+
 </android.support.v7.widget.CardView>

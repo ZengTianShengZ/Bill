@@ -7,19 +7,37 @@ import java.util.List;
  * Created by Administrator on 2016/7/26.
  */
 public class DataInfo {
+    private String testStr;
 
+    public String getTestStr() {
+        return testStr;
+    }
+
+    public void setTestStr(String testStr) {
+        this.testStr = testStr;
+    }
+
+    private int intData;
     private String totalMoney;
-
     private String monthInfo;
     private String weekInfo;
-    private String dataInfo;
+    private String dayInfo;
     private List<AddBillBean> billList = new ArrayList<AddBillBean>();
 
-    public DataInfo(String monthInfo, String weekInfo, String dataInfo,String totalMoney) {
+    public DataInfo(String monthInfo, String weekInfo, String dayInfo,String totalMoney,int intData) {
         this.monthInfo = monthInfo;
         this.weekInfo = weekInfo;
-        this.dataInfo = dataInfo;
+        this.dayInfo = dayInfo;
         this.totalMoney = totalMoney;
+        this.intData = intData;
+    }
+
+    public int getIntData() {
+        return intData;
+    }
+
+    public void setIntData(int intData) {
+        this.intData = intData;
     }
 
     public String getTotalMoney() {
@@ -38,12 +56,12 @@ public class DataInfo {
         this.monthInfo = monthInfo;
     }
 
-    public String getDataInfo() {
-        return dataInfo;
+    public String getDayInfo() {
+        return dayInfo;
     }
 
-    public void setDataInfo(String dataInfo) {
-        this.dataInfo = dataInfo;
+    public void setDayInfo(String dayInfo) {
+        this.dayInfo = dayInfo;
     }
 
     public String getWeekInfo() {
