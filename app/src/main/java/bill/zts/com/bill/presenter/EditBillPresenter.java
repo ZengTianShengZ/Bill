@@ -28,15 +28,16 @@ public class EditBillPresenter {
     public void setAddBillList(List<AddBillBean> adapterDatas, String text, List<String> tags){
 
         List<AddBillBean> billBeanList = new ArrayList<AddBillBean>();
+        if(0 != adapterDatas.size()){
+            billBeanList.addAll(adapterDatas);
+        }
         if(!TextUtils.isEmpty(text)) {
             AddBillBean addBillBean = new AddBillBean();
             addBillBean.setStrMoney(text);
             addBillBean.setTagList(tags);
             billBeanList.add(addBillBean);
         }
-        if(0 != adapterDatas.size()){
-            billBeanList.addAll(adapterDatas);
-        }
+
         if(billBeanList.size() != 0){
             mView.getAddBillList(billBeanList);
         }

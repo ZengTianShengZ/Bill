@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".ui.activity.MainActivity">
 
@@ -18,5 +19,15 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="DatePicker" />
-
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/tag_bill_menueeee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:padding="10dp"
+        app:tag_clickable="true"
+        app:container_enable_drag="false"
+        app:horizontal_interval="10dp"
+        app:vertical_interval="10dp"
+        app:tag_theme="random" />
 </LinearLayout>

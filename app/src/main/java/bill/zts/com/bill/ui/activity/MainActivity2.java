@@ -11,8 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -155,7 +153,7 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
         LinearLayoutManager llm = new LinearLayoutManager(mContext);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerview.setLayoutManager(llm);
-        mDataAdapter = new DataAdapter(mContext,lis_int);
+        mDataAdapter = new DataAdapter(mContext,MainActivity2.this,lis_int);
         mRecyclerview.setAdapter(mDataAdapter);
 
     }
@@ -196,14 +194,11 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
 
     }
 
+
     @Override
     public void getDialogBillList(List<AddBillBean> billList) {
         mEditBillDialog.dismiss();
         if(null != billList){
-           // mDataAdapter.notifyItemChanged(editAdapterItemPosition,billList);
-           // mDataAdapter.getAdapterDatas().get(editAdapterItemPosition).getBillList().addAll(billList);
-
-            //  lis_int.get(editAdapterItemPosition).getBillList().addAll(billList);
 
             DataInfo mDataInfo =  lis_int.get(editAdapterItemPosition) ;
             mDataInfo.getBillList().addAll(billList);
@@ -213,26 +208,29 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
             TagContainerLayout tag_bill =  viewHolder.getView( R.id.list_item_tag_bill);
             TextView item_bill_tv = viewHolder.getView( R.id.item_bill_tv);
 
-
-            float float_moneys = 0;
+            //float float_moneys = 0;
             for(AddBillBean addBillBean:billList){
                 tag_bill.addTag(addBillBean.getStrMoney()+"");
-                Float float_money = new Float(addBillBean.getStrMoney());
-                float_moneys += float_money;
+                //Float float_money = new Float(addBillBean.getStrMoney());
+                //float_moneys += float_money;
                 for(String tag:addBillBean.getTagList()){
                     bill_menu.addTag(tag);
                 }
             }
-            if(!TextUtils.isEmpty(item_bill_tv.getText())){
+            /*if(!TextUtils.isEmpty(item_bill_tv.getText())){
                 Float float_money = new Float(item_bill_tv.getText()+"");
                 float_moneys += float_money;
-            }
+            }*/
 
+            //mDataInfo.setTotalMoney(float_moneys+"");
+            /*float float_moneys = mDataAdapter.computeTotleMoney(editAdapterItemPosition);
             mDataInfo.setTotalMoney(float_moneys+"");
-            NumAnim.startAnim(item_bill_tv,float_moneys);
+            NumAnim.startAnim(item_bill_tv,float_moneys);*/
 
-            Log.i("getDialogBillList","........billList......."+billList.get(0).getStrMoney());
-            Log.i("getDialogBillList","........billList......."+billList.size());
+            // 刷新  money 总数
+            NumAnim.startAnim(item_bill_tv,mDataAdapter.computeTotleMoney(editAdapterItemPosition));
+
+            mDataAdapter.setTagOnLongClick(tag_bill,bill_menu, item_bill_tv, mDataInfo.getBillList(), editAdapterItemPosition);
         }
     }
 }

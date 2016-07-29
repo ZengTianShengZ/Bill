@@ -81,6 +81,7 @@
         </LinearLayout>
 
         <LinearLayout
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
@@ -94,36 +95,28 @@
                 android:layout_marginBottom="20dp"
                 android:layout_margin="0dp"
                 android:padding="10dp"
-                app:container_enable_drag="false"
                 app:horizontal_interval="10dp"
                 app:vertical_interval="10dp"
-                app:tag_clickable="false"
-                app:tag_theme="pure_teal" />
+                app:tag_theme="random" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="10dp"/>
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <co.lujun.androidtagview.TagContainerLayout
+                android:id="@+id/list_item_tag_bill_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:padding="10dp"
+                app:horizontal_interval="10dp"
+                app:vertical_interval="10dp"
+                app:tag_theme="random" />
 
-                <co.lujun.androidtagview.TagContainerLayout
-                    android:id="@+id/list_item_tag_bill_menu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="0dp"
-                    android:padding="10dp"
-                    app:tag_clickable="true"
-                    app:container_enable_drag="true"
-                    app:horizontal_interval="10dp"
-                    app:vertical_interval="10dp"
-                    app:tag_theme="random" />
-
-            </RelativeLayout>
 
         </LinearLayout>
     </LinearLayout>
+
 
 
     <ImageView
