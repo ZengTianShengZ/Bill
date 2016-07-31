@@ -9,10 +9,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import bill.zts.com.bill.db.SQUtil;
 import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
-import bill.zts.com.bill.ui.domain.SqBill;
-import bill.zts.com.bill.ui.domain.SqBillItem;
+
 
 /**
  * Created by Administrator on 2016/7/25.
@@ -24,6 +24,8 @@ public class DataUtils {
     public static int Day_Count;
     private static Calendar mCalendar;
     private static  String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+    private static boolean flag = true;
+
     static{
         mCalendar= Calendar.getInstance();//获取当前日期
         Year_Count = mCalendar.get(Calendar.YEAR);
@@ -36,6 +38,8 @@ public class DataUtils {
     }
 
     public static  List<DataInfo> getCurrentMonthDatas(){
+
+
 
         List<DataInfo> dataInfoList = new ArrayList<DataInfo>();
         for(int d = Day_Count; d>0;d--){
@@ -51,27 +55,11 @@ public class DataUtils {
             DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d,"0",intData);
 
             //  sq 数据库查询  ////////////////////////////////////////////////////////////////
-            List<SqBill> sqBills =   DataSupport.where("intDay = ?",intData+"").find(SqBill.class);
 
-            //SqBill sqBill = (SqBill) DataSupport.where("intDay = ?",intData+"").find(SqBill.class);
-            //SqBill sqBill = DataSupport.find(SqBill.class, intData);
-            Log.i("sqBill++++",".......sqBill fffffffffffffffff................."+sqBills);
-            if(0!= sqBills.size()){
-                Log.i("sqBill++++",".......sqBill fffffffffffffffff................."+sqBills.get(0));
-                SqBill sqBill = sqBills.get(0);
-                dataInfo.setTotalMoney(sqBill.getTotalMoney());
-                dataInfo.setTestStr(sqBill.getTestStr()+"");
+                Log.i("...","..........intData........."+intData);
+                SQUtil.findDataBean(intData, dataInfo);
+                Log.i("...","..........end........."+intData);
 
-                List<AddBillBean> billBeen = new ArrayList<AddBillBean>();
-                for(SqBillItem sqBillItem:sqBill.getBillList()){
-                    AddBillBean addBillBean = new AddBillBean();
-                    addBillBean.setStrMoney(sqBillItem.getStrMoney());
-                    addBillBean.setTagList(sqBillItem.getTagList());
-
-                    billBeen.add(addBillBean);
-                }
-                dataInfo.setBillList(billBeen);
-            }
 
             ////////////////////////////////////////////////////////////////////////////////
 

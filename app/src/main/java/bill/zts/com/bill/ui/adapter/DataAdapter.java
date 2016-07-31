@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bill.zts.com.bill.R;
+import bill.zts.com.bill.db.SQUtil;
 import bill.zts.com.bill.presenter.IView.IAdapterView;
 import bill.zts.com.bill.ui.activity.MainActivity2;
 import bill.zts.com.bill.ui.domain.AddBillBean;
@@ -40,39 +41,8 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
         this.mActivityContext = activityContext;
     }
 
-/*
-
-    @Override
-    public void bindBody(RecycleViewHolder holder, Object obj, int holderPosition) {
-        final DataInfo item = (DataInfo)obj;
-        TextView item_week_tv = holder.getView( R.id.item_week_tv);
-        TextView item_data_tv = holder.getView( R.id.item_data_tv);
-        TextView item_bill_tv = holder.getView( R.id.item_bill_tv);
-
-        item_week_tv.setText(""+item.getWeekInfo());
-        item_data_tv.setText(""+item.getDataInfo());
-    }
-
-    @Override
-    public void bindHead(RecycleViewHolder holder, Object obj, int holderPosition) {
-
-        TextView context_Tv = holder.getView( R.id.list_item_head_tv);
-        context_Tv.setText("bindHead");
-    }
-
-    @Override
-    public void bindBottom(RecycleViewHolder holder, Object obj, int holderPosition) {
-
-    }
-*/
     @Override
     public void bindBody(RecycleViewHolder holder, DataInfo dataInfo, final int holderPosition) {
-
-
-
-        TextView test_tv = holder.getView( R.id.test_tv);
-        test_tv.setText(dataInfo.getTestStr()+"");
-
 
         // 这边有 holder.getView 重内存获取view 所以 一直 getView 是不会造成 屏幕闪动或性能影响的
         TextView item_week_tv = holder.getView( R.id.item_week_tv);
@@ -86,15 +56,16 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
         item_week_tv.setText(""+dataInfo.getWeekInfo());
         item_data_tv.setText(""+dataInfo.getDayInfo());
 
+        // 要随机颜色 可以 到 ColorFactory 自己设置一组 颜色
+        item_bill_tv.setTextColor(ColorFactory.onRandomBuild()[1]);
+        item_bill_tv.setText(dataInfo.getTotalMoney()+"");
 
         tag_bill.setTags(str_bill);
         tag_bill_menu.setTags(str_bill_menu);
 
         setTagBill(tag_bill,tag_bill_menu,dataInfo.getBillList());
 
-        // 要随机颜色 可以 到 ColorFactory 自己设置一组 颜色
-        item_bill_tv.setTextColor(ColorFactory.onRandomBuild()[1]);
-        item_bill_tv.setText(dataInfo.getTotalMoney()+"");
+
 
 
         // Set customize theme
@@ -161,6 +132,9 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
                                     public void onClick(DialogInterface dialog, int which) {
 
                                         billList.remove(deleteBillBean.getDelete_position());
+
+                                        SQUtil.deleteDataBean(mDatas.get(holderPosition).getIntData(),billList);
+
                                         setTagBill(tag_bill,tag_bill_menu,billList);
                                         // 重新设置了 setTagBill 也需要从新 setTagOnLongClick 点击事件才有效
                                         setTagOnLongClick(tag_bill,tag_bill_menu, item_bill_tv, billList, holderPosition);

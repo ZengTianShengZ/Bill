@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bill.zts.com.bill.R;
+import bill.zts.com.bill.db.SQUtil;
 import bill.zts.com.bill.presenter.IView.IAdapterView;
 import bill.zts.com.bill.presenter.IView.IBillDialogFragmentView;
 import bill.zts.com.bill.presenter.IView.IMianView;
@@ -31,8 +32,6 @@ import bill.zts.com.bill.ui.adapter.DataAdapter;
 import bill.zts.com.bill.ui.adapter.RecycleViewHolder;
 import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
-import bill.zts.com.bill.ui.domain.SqBill;
-import bill.zts.com.bill.ui.domain.SqBillItem;
 import bill.zts.com.bill.ui.fragment.EditBillDialogFragment;
 import bill.zts.com.bill.utils.NumAnim;
 import butterknife.Bind;
@@ -215,71 +214,10 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
 
             float total_money = mDataAdapter.computeTotleMoney(editAdapterItemPosition);
 
-            ///////////////////////////////////////////////////////////////////////////////////////////////
+            ////////////////////////  db             ///////////////////////////////////////////////////////////////////////
+            Log.i("...",".............billList.size().............."+billList.size());
+            SQUtil.setDataBean(mDataInfo.getIntData(), billList);
 
-            List<SqBill> sqBills =   DataSupport.where("intDay = ?",mDataInfo.getIntData()+"").find(SqBill.class);
-            //SqBill sqBill = DataSupport.find(SqBill.class, mDataInfo.getIntData());
-
-            int id = 0;
-            if(0 == sqBills.size()){
-                SqBill newSqBill = new  SqBill();
-                newSqBill.save();
-                id = newSqBill.getId();
-
-                setDataSql(newSqBill,id,billList);
-
-            }else {
-                SqBill sqBill = sqBills.get(0);
-                setDataSql(sqBill,id,billList);
-            }
-
-          /*
-            if(0 == sqBills.size()){
-                SqBill newSqBill = new  SqBill();
-                 newSqBill.setTotalMoney(total_money+"");
-                newSqBill.setIntDay(mDataInfo.getIntData());
-                newSqBill.setId(mDataInfo.getIntData());
-                boolean b = newSqBill.save();
-
-                 Log.i("SqBill","............boolean.............."+b);
-
-                List<SqBillItem>   sqBillItemList = new ArrayList<SqBillItem>();
-
-                for (AddBillBean addBillBean:billList){
-                    SqBillItem sqBillItem = new SqBillItem();
-                    sqBillItem.setSqBill(newSqBill);
-
-                    sqBillItem.setStrMoney(addBillBean.getStrMoney());
-                    sqBillItem.setTagList(addBillBean.getTagList());
-
-                    sqBillItemList.add(sqBillItem);
-                }
-                 DataSupport.saveAll(sqBillItemList);
-
-                SqBill sqBill = DataSupport.find(SqBill.class, newSqBill.getId());
-                Log.i("SqBill","............find......+++++++++++++++...getId....."+ newSqBill.getId());
-                Log.i("SqBill","............find......+++++++++++++++........"+sqBill);
-
-            }else {
-                SqBill sqBill = sqBills.get(0);
-                int id = sqBill.getId();
-                Log.i("SqBill","............getId.... ........"+id);
-                List<SqBillItem>   sqBillItemList = new ArrayList<SqBillItem>();
-                for (AddBillBean addBillBean:billList){
-                    SqBillItem sqBillItem = new SqBillItem();
-                    sqBillItem.setSqBill(sqBill);
-
-                    sqBillItem.setStrMoney(addBillBean.getStrMoney());
-                    sqBillItem.setTagList(addBillBean.getTagList());
-
-                    sqBillItemList.add(sqBillItem);
-                }
-                DataSupport.saveAll(sqBillItemList);
-                sqBill.setTotalMoney(total_money+"");
-                //sqBill.setBillList(sqBillItemList);
-                sqBill.update(id);
-                Log.i("SqBill","............getId.... +++++++++++++++++++++++++++........"+id);
-            }*/
 
         ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -299,8 +237,4 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
         }
     }
 
-    private void setDataSql(SqBill sqBill,int id,List<AddBillBean> billList){
-        sqBill.setTestStr(billList.get(0).getStrMoney()+"");
-        sqBill.update(id);
-    }
 }

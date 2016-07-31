@@ -2,10 +2,11 @@
 <litepal>
     <dbname value="bill" ></dbname>
 
-    <version value="2" ></version>
+    <version value="4" ></version>
 
     <list>
-        <mapping class="bill.zts.com.bill.ui.domain.SqBill"></mapping>
-        <mapping class="bill.zts.com.bill.ui.domain.SqBillItem"></mapping>
+        <mapping class="bill.zts.com.bill.db.SQBill"></mapping>
+        <mapping class="bill.zts.com.bill.db.SQMenuTag"></mapping>
+        <mapping class="bill.zts.com.bill.db.SQMoneyTag"></mapping>
     </list>
 </litepal>

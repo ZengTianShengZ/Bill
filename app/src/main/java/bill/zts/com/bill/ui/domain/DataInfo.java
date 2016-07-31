@@ -7,15 +7,6 @@ import java.util.List;
  * Created by Administrator on 2016/7/26.
  */
 public class DataInfo {
-    private String testStr;
-
-    public String getTestStr() {
-        return testStr;
-    }
-
-    public void setTestStr(String testStr) {
-        this.testStr = testStr;
-    }
 
     private int intData;
     private String totalMoney;
