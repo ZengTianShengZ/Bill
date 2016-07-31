@@ -32,10 +32,13 @@ public class EditBillPresenter {
             billBeanList.addAll(adapterDatas);
         }
         if(!TextUtils.isEmpty(text)) {
-            AddBillBean addBillBean = new AddBillBean();
-            addBillBean.setStrMoney(text);
-            addBillBean.setTagList(tags);
-            billBeanList.add(addBillBean);
+            if(0!= tags.size()){
+                AddBillBean addBillBean = new AddBillBean();
+                addBillBean.setStrMoney(text);
+                addBillBean.setTagList(tags);
+                billBeanList.add(addBillBean);
+            }
+
         }
 
         if(billBeanList.size() != 0){

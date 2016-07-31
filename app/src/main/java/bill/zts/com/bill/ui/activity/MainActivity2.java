@@ -33,10 +33,12 @@ import bill.zts.com.bill.ui.adapter.RecycleViewHolder;
 import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
 import bill.zts.com.bill.ui.fragment.EditBillDialogFragment;
+import bill.zts.com.bill.utils.DoubleClickExit;
 import bill.zts.com.bill.utils.NumAnim;
 import butterknife.Bind;
 import co.lujun.androidtagview.TagContainerLayout;
 import mvp.zts.com.mvp_base.ui.activity.BaseActivity;
+import mvp.zts.com.mvp_base.utils.SnackbarUtil;
 
 /**
  * Created by Administrator on 2016/7/25.
@@ -99,7 +101,11 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
          if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
              mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+             if (!DoubleClickExit.check()) {
+                 SnackbarUtil.PrimarySnackbar(mContext,mDrawerLayout,"   再按一次退出应用  !!!");
+             } else {
+                 finish();
+             }
         }
     }
     @SuppressWarnings("StatementWithEmptyBody")
@@ -213,22 +219,17 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
             TextView item_bill_tv = viewHolder.getView( R.id.item_bill_tv);
 
             float total_money = mDataAdapter.computeTotleMoney(editAdapterItemPosition);
-
-            ////////////////////////  db             ///////////////////////////////////////////////////////////////////////
-            Log.i("...",".............billList.size().............."+billList.size());
+            // 将 数据 存入 数据库
             SQUtil.setDataBean(mDataInfo.getIntData(), billList);
 
 
-        ///////////////////////////////////////////////////////////////////////////////////////////
-
             for(AddBillBean addBillBean:billList){
-                tag_bill.addTag(addBillBean.getStrMoney()+"");
+                tag_bill.addTag(addBillBean.getStrMoney()+" ￥");
 
                 for(String tag:addBillBean.getTagList()){
                     bill_menu.addTag(tag);
                 }
             }
-
 
             // 刷新  money 总数
             NumAnim.startAnim(item_bill_tv,total_money);

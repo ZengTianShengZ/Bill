@@ -1,21 +1,18 @@
 package bill.zts.com.bill.utils;
 
-import android.util.Log;
-
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+
 import java.util.List;
 
 import bill.zts.com.bill.db.SQUtil;
-import bill.zts.com.bill.ui.domain.AddBillBean;
+
 import bill.zts.com.bill.ui.domain.DataInfo;
 
 
 /**
- * Created by Administrator on 2016/7/25.
+ *   DataUtils
  */
 public class DataUtils {
 
@@ -24,7 +21,6 @@ public class DataUtils {
     public static int Day_Count;
     private static Calendar mCalendar;
     private static  String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
-    private static boolean flag = true;
 
     static{
         mCalendar= Calendar.getInstance();//获取当前日期
@@ -33,13 +29,11 @@ public class DataUtils {
         Day_Count = mCalendar.get(Calendar.DAY_OF_MONTH);
     }
 
-    public static void getCurrentData(){
-
-    }
-
+    /**
+     * 得到当月 的 数据
+     * @return  List<DataInfo>
+     */
     public static  List<DataInfo> getCurrentMonthDatas(){
-
-
 
         List<DataInfo> dataInfoList = new ArrayList<DataInfo>();
         for(int d = Day_Count; d>0;d--){
@@ -54,14 +48,8 @@ public class DataUtils {
 
             DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d,"0",intData);
 
-            //  sq 数据库查询  ////////////////////////////////////////////////////////////////
-
-                Log.i("...","..........intData........."+intData);
-                SQUtil.findDataBean(intData, dataInfo);
-                Log.i("...","..........end........."+intData);
-
-
-            ////////////////////////////////////////////////////////////////////////////////
+            // 数据库 得到 数据
+            SQUtil.findDataBean(intData, dataInfo);
 
             dataInfoList.add(dataInfo);
         }
@@ -71,6 +59,10 @@ public class DataUtils {
         return dataInfoList;
     }
 
+    /**
+     *  得到下一个月的数据
+     * @return List<DataInfo>
+     */
     public static List<DataInfo> getNextMonthDatas(){
         Month_Count--;
         int int_month_flag = Month_Count;
@@ -97,7 +89,10 @@ public class DataUtils {
             int intData = Integer.parseInt(stringBuilder.toString());
 
             DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month,""+getWeek(d),""+d,"0",intData);
-            //System.out.println("....."+dataInfo.getMonthInfo()+"....."+dataInfo.getWeekInfo()+"..."+dataInfo.getDataInfo());
+
+            // 数据库 得到 数据
+            SQUtil.findDataBean(intData, dataInfo);
+
             dataInfoList.add(dataInfo);
         }
         DataInfo dataInfo = new DataInfo(""+Year_Count+"-"+int_month_flag,"bottom","bottom","0",0);
@@ -105,13 +100,15 @@ public class DataUtils {
         return dataInfoList;
     }
 
+    /**
+     *  计算 这一天 是星期几
+     * @param int_data 12
+     * @return String
+     */
     public static String getWeek(int int_data) {
-
-        mCalendar.set(Year_Count,Month_Count,int_data);
-        //System.out.println("..........int_week.........."+Year_Count+"-"+Month_Count+"-"+int_data);
-        int int_week =  mCalendar.get(Calendar.DAY_OF_WEEK);
-        //System.out.println("..........int_week.........."+int_week);
-        return weekDays[int_week-1];
+         mCalendar.set(Year_Count,Month_Count,int_data);
+         int int_week =  mCalendar.get(Calendar.DAY_OF_WEEK);
+         return weekDays[int_week-1];
     }
 
 }

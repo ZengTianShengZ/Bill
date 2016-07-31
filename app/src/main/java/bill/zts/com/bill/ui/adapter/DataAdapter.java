@@ -53,11 +53,25 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
         TagContainerLayout tag_bill =  holder.getView( R.id.list_item_tag_bill);
         TagContainerLayout tag_bill_menu =  holder.getView( R.id.list_item_tag_bill_menu);
 
+        // Set random color
+        int backgroundColor = ColorFactory.onRandomBuild()[0];
+        int borderColor = ColorFactory.onRandomBuild()[1];
+
+        tag_bill_menu.setTheme(ColorFactory.NONE);
+        tag_bill_menu.setTagBackgroundColor(backgroundColor);
+        tag_bill_menu.setTagBorderColor(borderColor);
+
+        tag_bill.setTheme(ColorFactory.NONE);
+        tag_bill.setTagBackgroundColor(backgroundColor);
+        tag_bill.setTagBorderColor(borderColor);
+
+        // 要随机颜色 可以 到 ColorFactory 自己设置一组 颜色
+        item_bill_tv.setTextColor(borderColor);
+
+
         item_week_tv.setText(""+dataInfo.getWeekInfo());
         item_data_tv.setText(""+dataInfo.getDayInfo());
 
-        // 要随机颜色 可以 到 ColorFactory 自己设置一组 颜色
-        item_bill_tv.setTextColor(ColorFactory.onRandomBuild()[1]);
         item_bill_tv.setText(dataInfo.getTotalMoney()+"");
 
         tag_bill.setTags(str_bill);
@@ -66,11 +80,6 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
         setTagBill(tag_bill,tag_bill_menu,dataInfo.getBillList());
 
 
-
-
-        // Set customize theme
-        tag_bill_menu.setTheme(ColorFactory.NONE);
-        tag_bill_menu.setTagBackgroundColor(ColorFactory.onRandomBuild()[0]);
 
         item_edit_bill.setOnClickListener(new View.OnClickListener() {
             @Override

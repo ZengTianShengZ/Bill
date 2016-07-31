@@ -23,6 +23,10 @@ public class DataInfo {
         this.intData = intData;
     }
 
+    public DataInfo() {
+
+    }
+
     public int getIntData() {
         return intData;
     }

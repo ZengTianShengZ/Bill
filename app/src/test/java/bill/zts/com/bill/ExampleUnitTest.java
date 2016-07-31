@@ -32,7 +32,7 @@ public class ExampleUnitTest {
         System.out.println(".........Calendar......"+year+".."+month +"..."+day+"..."+lastday+"..."+week);
 
 
-       c.set(year,month,day-1);
+        c.set(year,month,day-1);
 
         int year1 = c.get(Calendar.YEAR);
         int month1 = c.get(Calendar.MONTH)+1;

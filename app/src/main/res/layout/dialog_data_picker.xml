@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/dialog_picker_day_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_marginLeft="5dp"
+        android:text="221-232-2"
+        android:textSize="@dimen/text_size_25"
+        android:textColor="#000000"/>
+
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/picker_tag_bill_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_margin="0dp"
+        android:padding="10dp"
+        app:horizontal_interval="10dp"
+        app:vertical_interval="10dp"
+        app:tag_theme="random" />
+
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/picker_tag_bill_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_margin="0dp"
+        android:padding="10dp"
+        app:horizontal_interval="10dp"
+        app:vertical_interval="10dp"
+        app:tag_theme="random" />
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/dialog_picker_total_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="总钱："
+            android:textSize="@dimen/text_size_20"
+            android:textColor="#ca7373"/>
+        <TextView
+            android:id="@+id/dialog_picker_close_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="关闭"
+            android:textSize="@dimen/text_size_20"
+            android:textColor="@color/colorAccent"/>
+    </RelativeLayout>
+</LinearLayout>

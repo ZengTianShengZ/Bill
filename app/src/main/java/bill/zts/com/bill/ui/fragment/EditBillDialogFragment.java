@@ -110,7 +110,7 @@ public class EditBillDialogFragment extends DialogFragment implements IEditBillV
     private void initView() {
         initRecycleView();
 
-        addTag.setTags(str1);
+        //addTag.setTags(str1);
         defaultTag.setTags(str2);
 
         addTag.setOnTagClickListener(new TagView.OnTagClickListener() {
@@ -154,37 +154,35 @@ public class EditBillDialogFragment extends DialogFragment implements IEditBillV
 
     @OnClick(R.id.edit_bill_yesTv) void yesTv() {
 
-
-
+        if(0 == mEditBillAdapter.getAdapterDatas().size()){
+            if(0 == addTag.getTags().size()){
+                SnackbarUtil.PrimarySnackbar(mContext,noTv,"   你的标签不能为空!!!");
+            }
+        }else{
             mEditBillPresenter.setAddBillList(mEditBillAdapter.getAdapterDatas(),editMoney.getText()+"",addTag.getTags());
-
-           /* if(0 != mEditBillAdapter.getItemCount()){
-
-            }else{
-                if(TextUtils.isEmpty(editMoney.getText())){
-                    SnackbarUtil.PrimarySnackbar(mContext,noTv,"   你的Money不能为空!!!");
-                }else {
-                    AddBillBean addBillBean = new AddBillBean();
-                    addBillBean.setStrMoney(editMoney.getText()+"");
-                    addBillBean.setTagList(addTag.getTags());
-                    mEditBillAdapter.insertedItem(addBillBean);
-                }
-            }*/
-
-
+        }
     }
     @OnClick(R.id.edit_bill_noTv) void noTv() {
          dismiss();
     }
+
     @OnClick(R.id.edit_bill_addB_img) void addB_img() {
 
         if(TextUtils.isEmpty(editMoney.getText())){
             SnackbarUtil.PrimarySnackbar(mContext,noTv,"   你的Money不能为空!!!");
+        }else if(0 == addTag.getTags().size()){
+            SnackbarUtil.PrimarySnackbar(mContext,noTv,"   你的标签不能为空!!!");
         }else {
+
             AddBillBean addBillBean = new AddBillBean();
             addBillBean.setStrMoney(editMoney.getText()+"");
             addBillBean.setTagList(addTag.getTags());
             mEditBillAdapter.insertedItem(addBillBean);
+
+            // 清空 编辑器 的 数据
+            addTag.removeAllTags();
+            editMoney.setText("");
+
         }
     }
     @OnClick(R.id.edit_bill_addTag_img) void addTag_img() {
@@ -226,7 +224,7 @@ public class EditBillDialogFragment extends DialogFragment implements IEditBillV
         if(mIBillDialogFragmentView!= null){
             mIBillDialogFragmentView.getDialogBillList(billList);
         }
-
+        dismiss();
 
     }
 
