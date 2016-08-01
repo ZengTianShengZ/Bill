@@ -15,7 +15,7 @@ import java.util.List;
 import bill.zts.com.bill.R;
 import bill.zts.com.bill.db.SQUtil;
 import bill.zts.com.bill.presenter.IView.IAdapterView;
-import bill.zts.com.bill.ui.activity.MainActivity2;
+import bill.zts.com.bill.ui.activity.MainActivity;
 import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
 import bill.zts.com.bill.ui.domain.DeleteBillBean;
@@ -31,11 +31,11 @@ import co.lujun.androidtagview.TagContainerLayout;
 public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
 
     private Context mContext;
-    private MainActivity2 mActivityContext;
+    private MainActivity mActivityContext;
     private String[] str_bill = {"今","天","花","了","0元","！","！","！"};
     private String[] str_bill_menu = {"快点","来","记账","吧","！","！","！"};
 
-    public DataAdapter(Context mContext, MainActivity2 activityContext, List<DataInfo> mListItems) {
+    public DataAdapter(Context mContext, MainActivity activityContext, List<DataInfo> mListItems) {
         super(mContext, R.layout.list_item, mListItems);
         this.mContext  =mContext;
         this.mActivityContext = activityContext;

@@ -4,7 +4,7 @@
     <PreferenceCategory android:title="界面">
         <Preference
             android:key="bill_type"
-            android:title="选择您的默认真账本"/>
+            android:title="选择您的默认记账本"/>
         <Preference
             android:key="change_update_time"
             android:title="设置提醒记账时间"/>

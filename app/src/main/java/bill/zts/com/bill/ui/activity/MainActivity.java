@@ -1,6 +1,5 @@
 package bill.zts.com.bill.ui.activity;
 
-import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,12 +15,9 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
-import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +43,7 @@ import mvp.zts.com.mvp_base.utils.SnackbarUtil;
 /**
  * Created by Administrator on 2016/7/25.
  */
-public class MainActivity2 extends BaseActivity<MainPresenter>
+public class MainActivity extends BaseActivity<MainPresenter>
         implements IMianView,IAdapterView,NavigationView.OnNavigationItemSelectedListener,
         IBillDialogFragmentView {
 
@@ -121,7 +117,7 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
         int id = item.getItemId();
 
         if (id == R.id.nav_set) {
-            startActivity(new Intent(MainActivity2.this, SettingActivity.class));
+            startActivity(new Intent(MainActivity.this, SettingActivity.class));
         } else if (id == R.id.nav_about) {
 
         } else if (id == R.id.nav_contact_me) {
@@ -143,7 +139,7 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity2.this, DatePickerActivity.class);
+                Intent intent = new Intent(MainActivity.this, DatePickerActivity.class);
                 startActivity(intent);
 
             }
@@ -186,7 +182,7 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
         LinearLayoutManager llm = new LinearLayoutManager(mContext);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerview.setLayoutManager(llm);
-        mDataAdapter = new DataAdapter(mContext,MainActivity2.this,lis_int);
+        mDataAdapter = new DataAdapter(mContext,MainActivity.this,lis_int);
         mRecyclerview.setAdapter(mDataAdapter);
 
     }
