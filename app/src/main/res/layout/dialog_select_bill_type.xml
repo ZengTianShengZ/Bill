@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="选择账单类型"
+        android:textColor="#000"
+        android:textSize="@dimen/text_size_20"/>
+
+    <RadioButton
+        android:id="@+id/radio_type_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:padding="20dp"
+         android:checked="true"
+        android:text="学生型"/>
+
+    <RadioButton
+        android:id="@+id/radio_type_tow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:padding="20dp"
+        android:checked="true"
+        android:text="职工型"/>
+    <RadioButton
+        android:id="@+id/radio_type_three"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:padding="20dp"
+        android:checked="true"
+        android:text="日常型"/>
+    <RadioButton
+        android:id="@+id/radio_type_fore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:padding="20dp"
+        android:checked="true"
+        android:text="休闲型"/>
+
+    <TextView
+        android:id="@+id/select_type_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="确定"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/text_size_15"/>
+</LinearLayout>

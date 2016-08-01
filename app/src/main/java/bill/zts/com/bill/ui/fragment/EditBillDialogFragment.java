@@ -154,10 +154,8 @@ public class EditBillDialogFragment extends DialogFragment implements IEditBillV
 
     @OnClick(R.id.edit_bill_yesTv) void yesTv() {
 
-        if(0 == mEditBillAdapter.getAdapterDatas().size()){
-            if(0 == addTag.getTags().size()){
-                SnackbarUtil.PrimarySnackbar(mContext,noTv,"   你的标签不能为空!!!");
-            }
+        if(0 == mEditBillAdapter.getAdapterDatas().size()&&0 == addTag.getTags().size()&&TextUtils.isEmpty(editMoney.getText())){
+            SnackbarUtil.PrimarySnackbar(mContext,noTv,"   你的 money 或 标签 不能为空 ! ! !");
         }else{
             mEditBillPresenter.setAddBillList(mEditBillAdapter.getAdapterDatas(),editMoney.getText()+"",addTag.getTags());
         }

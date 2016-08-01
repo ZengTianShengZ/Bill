@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context=".ui.activity.MainActivity">
 
@@ -18,7 +20,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#c76060"
+            android:background="@color/pick_activity_darkColor"
             app:layout_scrollFlags="scroll|enterAlways"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>

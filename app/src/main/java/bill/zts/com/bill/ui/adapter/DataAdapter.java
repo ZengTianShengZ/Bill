@@ -19,7 +19,7 @@ import bill.zts.com.bill.ui.activity.MainActivity2;
 import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
 import bill.zts.com.bill.ui.domain.DeleteBillBean;
-import bill.zts.com.bill.ui.domain.DeleteBillTagBean;
+
 import bill.zts.com.bill.utils.NumAnim;
 import co.lujun.androidtagview.ColorFactory;
 import co.lujun.androidtagview.TagContainerLayout;

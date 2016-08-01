@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#5bcee6</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="medium_blue">#1b89d7</color>
+    <color name="white">#FFFFFF</color>
+    <color name="pick_activity_darkColor">#c76060</color>
 </resources>

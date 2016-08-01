@@ -2,13 +2,17 @@ package bill.zts.com.bill.ui.activity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -58,6 +62,8 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
     FloatingActionButton fab;
     @Bind(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+    @Bind(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
 
     private EditBillDialogFragment mEditBillDialog;
 
@@ -114,17 +120,11 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_set) {
+            startActivity(new Intent(MainActivity2.this, SettingActivity.class));
+        } else if (id == R.id.nav_about) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_contact_me) {
 
         }
 
@@ -135,7 +135,7 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
 
     private void initView() {
 
-        setTitle("!");
+        setTitle("Bill");
 
         mSwipeRefreshLayout.setEnabled(false);
 
@@ -156,7 +156,29 @@ public class MainActivity2 extends BaseActivity<MainPresenter>
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        initToolbarColor();
         initRecycleView();
+    }
+
+    private void initToolbarColor() {
+
+        //mCollapsingToolbarLayout
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.bill_mater);
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                int defaultColor = getResources().getColor(R.color.medium_blue);
+                int defaultTitleColor = getResources().getColor(R.color.white);
+                int bgColor = palette.getDarkVibrantColor(defaultColor);
+                int titleColor = palette.getLightVibrantColor(defaultTitleColor);
+
+                mCollapsingToolbarLayout.setContentScrimColor(titleColor);
+                mCollapsingToolbarLayout.setCollapsedTitleTextColor(titleColor);
+                mCollapsingToolbarLayout.setExpandedTitleColor(titleColor);
+            }
+        });
+
     }
 
     private void initRecycleView() {

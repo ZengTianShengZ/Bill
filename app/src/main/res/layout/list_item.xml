@@ -6,6 +6,7 @@
     android:id="@+id/news_list_card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="20dp"
     card_view:cardBackgroundColor="#FFFFFF"
     card_view:cardCornerRadius="4dp"
     card_view:cardElevation="4dp">
