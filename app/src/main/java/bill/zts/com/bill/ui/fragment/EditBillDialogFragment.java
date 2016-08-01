@@ -33,6 +33,8 @@ import bill.zts.com.bill.presenter.IView.IEditBillView;
 import bill.zts.com.bill.ui.adapter.DataAdapter;
 import bill.zts.com.bill.ui.adapter.EditBillAdapter;
 import bill.zts.com.bill.ui.domain.AddBillBean;
+import bill.zts.com.bill.utils.ConstantUtils;
+import bill.zts.com.bill.utils.SharedPreferenceUtil;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -110,8 +112,23 @@ public class EditBillDialogFragment extends DialogFragment implements IEditBillV
     private void initView() {
         initRecycleView();
 
-        //addTag.setTags(str1);
-        defaultTag.setTags(str2);
+        SharedPreferenceUtil mSharedPreferenceUtil = SharedPreferenceUtil.getInstance(getActivity().getApplicationContext());
+
+        switch (mSharedPreferenceUtil.getBillType()) {
+            case 0:
+                defaultTag.setTags(ConstantUtils.StudentTag);
+                break;
+            case 1:
+                defaultTag.setTags(ConstantUtils.OfficeWorkTag);
+                break;
+            case 2:
+                defaultTag.setTags(ConstantUtils.DailyTag);
+                break;
+            case 3:
+                defaultTag.setTags(ConstantUtils.LeisureTag);
+                break;
+
+        }
 
         addTag.setOnTagClickListener(new TagView.OnTagClickListener() {
 

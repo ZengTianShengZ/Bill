@@ -69,7 +69,7 @@ public abstract class BaseSwipeRefreshActivity<P extends BasePresenter> extends 
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
-        },1000);
+        },2000);
     }
 
     @Override

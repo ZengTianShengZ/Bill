@@ -15,6 +15,7 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -35,6 +36,8 @@ import bill.zts.com.bill.ui.domain.DataInfo;
 import bill.zts.com.bill.ui.fragment.EditBillDialogFragment;
 import bill.zts.com.bill.utils.DoubleClickExit;
 import bill.zts.com.bill.utils.NumAnim;
+import bill.zts.com.bill.utils.view.RecycleViewDivider;
+import bill.zts.com.bill.utils.view.SystemBarColor;
 import butterknife.Bind;
 import co.lujun.androidtagview.TagContainerLayout;
 import mvp.zts.com.mvp_base.ui.activity.BaseActivity;
@@ -66,6 +69,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
     private DataAdapter mDataAdapter;
     private  List<DataInfo> lis_int = new ArrayList<DataInfo>();
     private int editAdapterItemPosition;
+    private int darkVibrantColor;
+    private int lightVibrantColor;
 
 
     @Override
@@ -79,56 +84,41 @@ public class MainActivity extends BaseActivity<MainPresenter>
     }
 
     @Override
+    protected void initPresenter() {
+        mPresenter = new MainPresenter(this,this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        initToolbarColor();
         initView();
         initData();
     }
 
+    private void initToolbarColor() {
+        SystemBarColor.initSystemBar(MainActivity.this,R.color.pick_activity_darkColor);
 
-    @Override
-    protected void initPresenter() {
-        mPresenter = new MainPresenter(this,this);
+/*
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.bill_mater);
+        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
+            @Override
+            public void onGenerated(Palette palette) {
+                int defaultColor = getResources().getColor(R.color.medium_blue);
+                int defaultTitleColor = getResources().getColor(R.color.white);
+                darkVibrantColor = palette.getDarkVibrantColor(defaultColor);
+                lightVibrantColor = palette.getLightVibrantColor(defaultTitleColor);
+
+                mCollapsingToolbarLayout.setContentScrimColor(lightVibrantColor);
+                mCollapsingToolbarLayout.setCollapsedTitleTextColor(darkVibrantColor);
+                mCollapsingToolbarLayout.setExpandedTitleColor(darkVibrantColor);
+
+
+            }
+        });*/
+
     }
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-       // mSwipeRefreshLayout.setRefreshing(true);
-    }
-
-
-    @Override
-    public void onBackPressed() {
-         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
-             mDrawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-             if (!DoubleClickExit.check()) {
-                 SnackbarUtil.PrimarySnackbar(mContext,mDrawerLayout,"   再按一次退出应用  !!!");
-             } else {
-                 finish();
-             }
-        }
-    }
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_set) {
-            startActivity(new Intent(MainActivity.this, SettingActivity.class));
-        } else if (id == R.id.nav_about) {
-
-        } else if (id == R.id.nav_contact_me) {
-
-        }
-
-        mDrawerLayout.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-
     private void initView() {
 
         setTitle("Bill");
@@ -152,41 +142,58 @@ public class MainActivity extends BaseActivity<MainPresenter>
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        initToolbarColor();
         initRecycleView();
     }
 
-    private void initToolbarColor() {
-
-        //mCollapsingToolbarLayout
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.bill_mater);
-        Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
-            @Override
-            public void onGenerated(Palette palette) {
-                int defaultColor = getResources().getColor(R.color.medium_blue);
-                int defaultTitleColor = getResources().getColor(R.color.white);
-                int bgColor = palette.getDarkVibrantColor(defaultColor);
-                int titleColor = palette.getLightVibrantColor(defaultTitleColor);
-
-                mCollapsingToolbarLayout.setContentScrimColor(titleColor);
-                mCollapsingToolbarLayout.setCollapsedTitleTextColor(titleColor);
-                mCollapsingToolbarLayout.setExpandedTitleColor(titleColor);
-            }
-        });
-
-    }
 
     private void initRecycleView() {
         mRecyclerview.setHasFixedSize(false);
         LinearLayoutManager llm = new LinearLayoutManager(mContext);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerview.setLayoutManager(llm);
+        //mRecyclerview 分割线
+        mRecyclerview.addItemDecoration(new RecycleViewDivider(getBaseContext(),
+                LinearLayoutManager.HORIZONTAL,20,getResources().getColor(R.color.white)));
         mDataAdapter = new DataAdapter(mContext,MainActivity.this,lis_int);
         mRecyclerview.setAdapter(mDataAdapter);
 
     }
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        // mSwipeRefreshLayout.setRefreshing(true);
+    }
 
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            if (!DoubleClickExit.check()) {
+                SnackbarUtil.PrimarySnackbar(mContext,mDrawerLayout,"   再按一次退出应用  !!!");
+            } else {
+                finish();
+            }
+        }
+    }
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_set) {
+            startActivity(new Intent(MainActivity.this, SettingActivity.class));
+        } else if (id == R.id.nav_about) {
+            startActivity(new Intent(MainActivity.this, AboutAppActivity.class));
+        } else if (id == R.id.nav_contact_me) {
+
+        }
+
+        mDrawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
     private void initData() {
         mDataAdapter.setILoadeMoreDateView(this);
         mPresenter.getCurrentMonthDatas();

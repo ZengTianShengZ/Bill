@@ -28,6 +28,9 @@
         <activity
             android:theme="@style/AppTheme.NoActionBar"
             android:name=".ui.activity.SettingActivity"></activity>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar"
+            android:name=".ui.activity.AboutAppActivity"></activity>
 
     </application>
 

@@ -20,6 +20,7 @@ import bill.zts.com.bill.presenter.DatePickerPresenter;
 import bill.zts.com.bill.presenter.IView.IDatePickerView;
 import bill.zts.com.bill.ui.domain.DataInfo;
 import bill.zts.com.bill.ui.fragment.DatePickerDialogFragment;
+import bill.zts.com.bill.utils.view.SystemBarColor;
 import butterknife.Bind;
 import cn.aigestudio.datepicker.cons.DPMode;
 import cn.aigestudio.datepicker.views.DatePicker;
@@ -55,32 +56,10 @@ public class DatePickerActivity extends BaseActivity<DatePickerPresenter> implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initSystemBar(DatePickerActivity.this);
+
+        SystemBarColor.initSystemBar(DatePickerActivity.this,R.color.pick_activity_darkColor);
         initView();
         setTitle("Back",true);
-    }
-
-    public   void initSystemBar(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(activity, true);
-        }
-        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
-        tintManager.setStatusBarTintEnabled(true);
-// 使用颜色资源
-        tintManager.setStatusBarTintResource(R.color.pick_activity_darkColor);
-    }
-
-    @TargetApi(19)
-    private   void setTranslucentStatus(Activity activity, boolean on) {
-        Window win = activity.getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
     }
 
 
