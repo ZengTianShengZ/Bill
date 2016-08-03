@@ -7,4 +7,8 @@
     <color name="medium_blue">#1b89d7</color>
     <color name="white">#FFFFFF</color>
     <color name="pick_activity_darkColor">#c76060</color>
+
+    <color name="colorOverall">#3b1400</color>
+
+    <color name="sss">#3b1400</color>
 </resources>

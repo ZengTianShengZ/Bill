@@ -92,19 +92,20 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
     }*/
 
     public void setLocalHtmlWeb(WebView webView,String htmlFileName,int accentColor){
-        mView.showRefresh();
+
         setWebView(webView);
         loadData(webView,htmlFileName,accentColor);
     }
     private void setWebView(WebView webView){
-
+        webView.setHorizontalScrollBarEnabled(false);//水平不显示
+        webView.setVerticalScrollBarEnabled(false); //垂直不显示
         WebSettings settings = webView.getSettings();
         settings.setDefaultTextEncodingName(KEY_UTF_8);
         settings.setJavaScriptEnabled(true);
         webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
-
+                mView.showRefresh();
                 if(newProgress >= 100){
                     mView.hideRefresh();
                 }
@@ -116,27 +117,21 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
     private void loadData(WebView webView,String htmlFileName,int accentColor){
         try {
             StringBuilder buf = new StringBuilder();
-            Log.i("loadData","..............loadData.........1..");
-            InputStream json = mContext.getAssets().open(htmlFileName);
-            Log.i("loadData","..............loadData.........2..");
-            BufferedReader in = new BufferedReader(new InputStreamReader(json,KEY_UTF_8));
-            Log.i("loadData","..............loadData.........3..");
-            String str;
+             InputStream json = mContext.getAssets().open(htmlFileName);
+             BufferedReader in = new BufferedReader(new InputStreamReader(json,KEY_UTF_8));
+             String str;
             while ((str = in.readLine()) != null)
                 buf.append(str);
             in.close();
-            Log.i("loadData","..............loadData..........."+buf.toString());
-            String formatLodString = buf.toString()
-                    .replace("{style-placeholder}", "body { background-color: #ffffff; color: #000; }")
+             String formatLodString = buf.toString();
+                   /* .replace("{style-placeholder}", "body { background-color: #ffffff; color: #000; }")
                     .replace("{link-color}", colorToHex(shiftColor(accentColor, true)))
-                    .replace("{link-color-active}", colorToHex(accentColor));
+                    .replace("{link-color-active}", colorToHex(accentColor));*/
 
-            Log.i("loadData","..............formatLodString..........."+formatLodString);
 
             webView.loadDataWithBaseURL(null,formatLodString, "text/html", KEY_UTF_8, null);
         } catch (Throwable e) {
-            Log.i("loadData","..............Throwable..........."+e);
-            webView.loadData("<h1>Unable to load</h1><p>" + e.getLocalizedMessage()+ "</p>", "text/html", KEY_UTF_8);
+             webView.loadData("<h1>Unable to load</h1><p>" + e.getLocalizedMessage()+ "</p>", "text/html", KEY_UTF_8);
         }
     }
 

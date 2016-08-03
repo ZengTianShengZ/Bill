@@ -17,8 +17,12 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.umeng.analytics.MobclickAgent;
+
 import bill.zts.com.bill.R;
 import bill.zts.com.bill.utils.SharedPreferenceUtil;
+import bill.zts.com.bill.utils.view.SystemBarColor;
 
 /**
  * Created by Administrator on 2016/8/1.
@@ -30,7 +34,7 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_framelayout);
         //ButterKnife.bind(this);
-
+        SystemBarColor.initSystemBar(SettingActivity.this,R.color.colorOverall);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Back");
@@ -53,7 +57,14 @@ public class SettingActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
 
 
 

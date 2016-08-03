@@ -8,7 +8,6 @@ import android.view.WindowManager;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-import bill.zts.com.bill.R;
 
 /**
  * Created by Administrator on 2016/8/1.
@@ -25,7 +24,14 @@ public class SystemBarColor {
         // 使用颜色资源
         tintManager.setStatusBarTintResource(color_id);
     }
+    public static void initSystemBarxx(Activity activity ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            setTranslucentStatus(activity, true);
+        }
+        SystemBarTintManager tintManager = new SystemBarTintManager(activity);
+        tintManager.setStatusBarTintEnabled(true);
 
+    }
     @TargetApi(19)
     private static  void setTranslucentStatus(Activity activity, boolean on) {
         Window win = activity.getWindow();
@@ -38,4 +44,5 @@ public class SystemBarColor {
         }
         win.setAttributes(winParams);
     }
+
 }

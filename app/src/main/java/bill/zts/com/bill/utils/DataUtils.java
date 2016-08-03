@@ -28,6 +28,12 @@ public class DataUtils {
         Month_Count = mCalendar.get(Calendar.MONTH);
         Day_Count = mCalendar.get(Calendar.DAY_OF_MONTH);
     }
+    public static void resetCurrentDay(){
+        mCalendar= Calendar.getInstance();//获取当前日期
+        Year_Count = mCalendar.get(Calendar.YEAR);
+        Month_Count = mCalendar.get(Calendar.MONTH);
+        Day_Count = mCalendar.get(Calendar.DAY_OF_MONTH);
+    }
 
     /**
      * 得到当月 的 数据

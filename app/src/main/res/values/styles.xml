@@ -9,6 +9,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -26,6 +27,11 @@
         <item name="android:textColorPrimary">#000000</item>
         <!-- Used for the background -->
         <item name="android:background">#FFFFFF</item>
+    </style>
+
+    <style name="FirstTheme" parent="Theme.AppCompat">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@mipmap/first_activity_bg</item>
     </style>
 
 </resources>

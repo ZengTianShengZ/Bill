@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +100,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
     }
 
     private void initToolbarColor() {
-        SystemBarColor.initSystemBar(MainActivity.this,R.color.pick_activity_darkColor);
+        SystemBarColor.initSystemBar(MainActivity.this,R.color.colorOverall);
 
 /*
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.bill_mater);
@@ -263,4 +265,17 @@ public class MainActivity extends BaseActivity<MainPresenter>
         }
     }
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mPresenter.onActivityDestory();
+    }
 }

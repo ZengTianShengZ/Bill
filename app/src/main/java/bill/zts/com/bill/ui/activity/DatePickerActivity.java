@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Calendar;
 
@@ -122,5 +123,14 @@ public class DatePickerActivity extends BaseActivity<DatePickerPresenter> implem
     @Override
     public void getNullData() {
         SnackbarUtil.PrimarySnackbar(mContext,picker,"   数据为空!!!");
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
