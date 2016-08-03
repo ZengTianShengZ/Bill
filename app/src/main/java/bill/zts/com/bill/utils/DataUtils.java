@@ -20,7 +20,7 @@ public class DataUtils {
     public static int Month_Count;
     public static int Day_Count;
     private static Calendar mCalendar;
-    private static  String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
+    public static  String[] weekDays = {"星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"};
 
     static{
         mCalendar= Calendar.getInstance();//获取当前日期

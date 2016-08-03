@@ -1,23 +1,37 @@
 package bill.zts.com.bill.ui.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
 import com.umeng.analytics.MobclickAgent;
 
 import bill.zts.com.bill.R;
+import bill.zts.com.bill.http.ApiInterface;
+import bill.zts.com.bill.http.RetrofitApi;
 import bill.zts.com.bill.presenter.IView.IWebView;
 import bill.zts.com.bill.presenter.WebViewPresenter;
+import bill.zts.com.bill.ui.domain.VersionAPI;
+import bill.zts.com.bill.utils.ConstantUtils;
+import bill.zts.com.bill.utils.RxUtils;
 import bill.zts.com.bill.utils.view.SystemBarColor;
 import butterknife.Bind;
 import mvp.zts.com.mvp_base.ui.activity.BaseSwipeRefreshActivity;
 import mvp.zts.com.mvp_base.utils.SnackbarUtil;
+import rx.functions.Action1;
 
 /**
  * Created by Administrator on 2016/8/2.
@@ -58,7 +72,7 @@ public class AboutAppActivity  extends BaseSwipeRefreshActivity<WebViewPresenter
         SystemBarColor.initSystemBar(AboutAppActivity.this,R.color.colorOverall);
         setTitle("About App",true);
 
-        about_webview.addJavascriptInterface(new WebAppInterface(getApplicationContext()),"Android");
+        about_webview.addJavascriptInterface(new WebAppInterface(getApplicationContext(),AboutAppActivity.this),"Android");
 
 
         int accentColor = getApplicationContext().getResources().getColor(R.color.colorAccent);
@@ -118,19 +132,59 @@ public class AboutAppActivity  extends BaseSwipeRefreshActivity<WebViewPresenter
 
     public class WebAppInterface {
         Context mContext;
-
-        WebAppInterface(Context c) {
+        AboutAppActivity aboutAppActivity;
+        WebAppInterface(Context c, AboutAppActivity aboutAppActivity) {
             mContext = c;
+            this.aboutAppActivity = aboutAppActivity;
+
         }
 
         @JavascriptInterface
         public void checkNewVersion(){
-            SnackbarUtil.PrimarySnackbar(mContext,about_webview," 已经是  最新版本 !!!");
 
+            ApiInterface apiInterface =   RetrofitApi.retrofit.create(ApiInterface.class);
+
+            apiInterface.mVersionAPI(ConstantUtils.Token).compose(RxUtils.<VersionAPI>rxSchedulerHelper())
+                    .subscribe(new Action1<VersionAPI>() {
+                        @Override
+                        public void call(VersionAPI versionAPI) {
+
+                            String firVersionName = versionAPI.getVersionShort();
+                            String currentVersionName = ConstantUtils.getVersion(mContext);
+                            if (currentVersionName.compareTo(firVersionName) < 0) {
+                                showVersion(versionAPI);
+                            }else {
+                                SnackbarUtil.PrimarySnackbar(mContext,about_webview," 已经是  最新版本 !!!");
+                            }
+                        }
+                    });
         }
         @JavascriptInterface
         public void shareApp(){
+            //复制黏贴板
+            ClipboardManager manager = (ClipboardManager)mContext.getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("msg", "http://fir.im/Billapk");
+            manager.setPrimaryClip(clipData);
+            SnackbarUtil.PrimarySnackbar(mContext,about_webview," 分享链接已经复制到粘贴板啦 !!!");
 
         }
+    }
+
+    private void showVersion(final VersionAPI versionAPI){
+        String title = "发现新版" + versionAPI.getName() + "版本号：" + versionAPI.versionShort;
+
+        new AlertDialog.Builder(AboutAppActivity.this).setTitle(title)
+                .setMessage(versionAPI.changelog)
+                .setPositiveButton("下载", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Uri uri = Uri.parse(versionAPI.updateUrl);   //指定网址
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);           //指定Action
+                        intent.setData(uri);                            //设置Uri
+                        AboutAppActivity.this.startActivity(intent);        //启动Activity
+                    }
+                })
+                .show();
     }
 }

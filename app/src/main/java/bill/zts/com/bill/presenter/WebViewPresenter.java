@@ -90,6 +90,10 @@ public class WebViewPresenter extends BasePresenter<IWebView> {
 
         return dialog;
     }*/
+    public void setLoadWebBoWeb(WebView webView,String url){
+        setWebView(webView);
+        webView.loadUrl(url);
+    }
 
     public void setLocalHtmlWeb(WebView webView,String htmlFileName,int accentColor){
 

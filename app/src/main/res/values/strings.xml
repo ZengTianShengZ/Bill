@@ -1,11 +1,15 @@
 <resources>
-    <string name="app_name">bill</string>
+    <string name="app_name">Bill</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_tt">tt</string>
+
+    <string name="can_not_find_version_name">找不到版本号</string>
+
+
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

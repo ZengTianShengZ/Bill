@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitApi {
 
     private static ApiInterface apiService = null;
-    private static Retrofit retrofit;
+    public static Retrofit retrofit;
     static {
           retrofit = new Retrofit.Builder()
                 .baseUrl(ApiInterface.HOST)
@@ -19,8 +19,8 @@ public class RetrofitApi {
                 .build();
     }
 
-    public static Object getApiService(Class clas){
-       return retrofit.create(clas);
+    public static ApiInterface getApiService(Class clas){
+       return (ApiInterface) retrofit.create(clas);
     }
 
 

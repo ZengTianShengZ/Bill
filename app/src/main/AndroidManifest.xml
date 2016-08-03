@@ -41,6 +41,10 @@
             android:name=".ui.activity.AboutAppActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".ui.activity.AboutMeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
             android:name=".ui.activity.tt"
             android:label="@string/title_activity_tt"
             android:theme="@style/AppTheme.NoActionBar"></activity>
@@ -51,7 +55,7 @@
             android:value="579589e7e0f55ae33d000b46" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Wandoujia" />
+            android:value="XIAOMI" />
 
 
     </application>

@@ -105,7 +105,7 @@ public class DataAdapter extends BaseTypeRecycleViewAdapter<DataInfo> {
 
 
         Log.i("bindBottom","............bindBottom............");
-        Toast.makeText(mContext,".....bindBottom......",Toast.LENGTH_LONG).show();
+        //Toast.makeText(mContext,".....bindBottom......",Toast.LENGTH_LONG).show();
         if( mIAdapterView!= null){
             mIAdapterView.adapterLoadMoreDate();
         }

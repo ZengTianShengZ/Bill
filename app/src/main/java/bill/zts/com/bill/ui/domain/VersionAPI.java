@@ -33,4 +33,75 @@ public class VersionAPI {
         @SerializedName("fsize") public int fsize;
     }
 
+    public BinaryEntity getBinary() {
+        return binary;
+    }
+
+    public void setBinary(BinaryEntity binary) {
+        this.binary = binary;
+    }
+
+    public String getBuild() {
+        return build;
+    }
+
+    public void setBuild(String build) {
+        this.build = build;
+    }
+
+    public String getDirectInstallUrl() {
+        return directInstallUrl;
+    }
+
+    public void setDirectInstallUrl(String directInstallUrl) {
+        this.directInstallUrl = directInstallUrl;
+    }
+
+    public String getChangelog() {
+        return changelog;
+    }
+
+    public void setChangelog(String changelog) {
+        this.changelog = changelog;
+    }
+
+    public String getInstallUrl() {
+        return installUrl;
+    }
+
+    public void setInstallUrl(String installUrl) {
+        this.installUrl = installUrl;
+    }
+
+    public int getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(int updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getUpdateUrl() {
+        return updateUrl;
+    }
+
+    public void setUpdateUrl(String updateUrl) {
+        this.updateUrl = updateUrl;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getVersionShort() {
+        return versionShort;
+    }
+
+    public void setVersionShort(String versionShort) {
+        this.versionShort = versionShort;
+    }
 }

@@ -42,7 +42,7 @@ public class SnackbarUtil {
 
     public static  void PrimarySnackbar(Context context,View view, String message){
         LongSnackbar(view,message,
-                context.getResources().getColor(R.color.colorPrimary),
+                context.getResources().getColor(R.color.white),
                 context.getResources().getColor(R.color.colorPrimaryDark)).show();
     }
     /**

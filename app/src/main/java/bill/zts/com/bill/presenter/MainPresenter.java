@@ -2,6 +2,7 @@ package bill.zts.com.bill.presenter;
 
 import android.app.Activity;
 import android.support.v4.app.INotificationSideChannel;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import bill.zts.com.bill.utils.DataUtils;
 import bill.zts.com.bill.utils.RxUtils;
 import mvp.zts.com.mvp_base.Presenter.BasePresenter;
 import mvp.zts.com.mvp_base.Presenter.IView.IBaseView;
+import mvp.zts.com.mvp_base.utils.SnackbarUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Action1;
@@ -44,16 +46,21 @@ public class MainPresenter extends BasePresenter<IMianView> {
     }
 
     public void getVersion(){
-        ApiInterface apiInterface = (ApiInterface) RetrofitApi.getApiService(VersionAPI.class);
+
+        ApiInterface apiInterface =   RetrofitApi.retrofit.create(ApiInterface.class);
 
         apiInterface.mVersionAPI(ConstantUtils.Token).compose(RxUtils.<VersionAPI>rxSchedulerHelper())
                 .subscribe(new Action1<VersionAPI>() {
                     @Override
                     public void call(VersionAPI versionAPI) {
 
+                        String firVersionName = versionAPI.getVersionShort();
+                        String currentVersionName = ConstantUtils.getVersion(mContext);
+                        if (currentVersionName.compareTo(firVersionName) < 0) {
+                            mView.upApkVersion(versionAPI);
+                        }
                     }
                 });
-
 
     }
 }

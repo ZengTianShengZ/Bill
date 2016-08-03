@@ -2,6 +2,7 @@ package bill.zts.com.bill.presenter.IView;
 
 import java.util.List;
 
+import bill.zts.com.bill.ui.domain.VersionAPI;
 import mvp.zts.com.mvp_base.Presenter.IView.IBaseView;
 import mvp.zts.com.mvp_base.Presenter.IView.ISwipeRefreshView;
 
@@ -15,6 +16,8 @@ public interface IMianView<T> extends IBaseView {
     void appendMoreDataToView(List<T> mData);
 
     void hasNoMoreData();
+
+    void upApkVersion(VersionAPI versionAPI);
 
 
 }

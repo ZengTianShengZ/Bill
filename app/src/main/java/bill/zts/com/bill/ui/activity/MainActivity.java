@@ -1,8 +1,10 @@
 package bill.zts.com.bill.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +13,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,6 +38,7 @@ import bill.zts.com.bill.ui.adapter.DataAdapter;
 import bill.zts.com.bill.ui.adapter.RecycleViewHolder;
 import bill.zts.com.bill.ui.domain.AddBillBean;
 import bill.zts.com.bill.ui.domain.DataInfo;
+import bill.zts.com.bill.ui.domain.VersionAPI;
 import bill.zts.com.bill.ui.fragment.EditBillDialogFragment;
 import bill.zts.com.bill.utils.DoubleClickExit;
 import bill.zts.com.bill.utils.NumAnim;
@@ -189,16 +193,16 @@ public class MainActivity extends BaseActivity<MainPresenter>
             startActivity(new Intent(MainActivity.this, SettingActivity.class));
         } else if (id == R.id.nav_about) {
             startActivity(new Intent(MainActivity.this, AboutAppActivity.class));
-        } else if (id == R.id.nav_contact_me) {
-
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
     private void initData() {
+        mPresenter.getVersion();
         mDataAdapter.setILoadeMoreDateView(this);
         mPresenter.getCurrentMonthDatas();
+
     }
 
 
@@ -230,6 +234,25 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public void hasNoMoreData() {
 
+    }
+
+    @Override
+    public void upApkVersion(final VersionAPI versionAPI) {
+        String title = "发现新版" + versionAPI.getName() + "版本号：" + versionAPI.versionShort;
+
+        new AlertDialog.Builder(MainActivity.this).setTitle(title)
+                .setMessage(versionAPI.changelog)
+                .setPositiveButton("下载", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Uri uri = Uri.parse(versionAPI.updateUrl);   //指定网址
+                        Intent intent = new Intent();
+                        intent.setAction(Intent.ACTION_VIEW);           //指定Action
+                        intent.setData(uri);                            //设置Uri
+                        MainActivity.this.startActivity(intent);        //启动Activity
+                    }
+                })
+                .show();
     }
 
     @Override
@@ -265,8 +288,11 @@ public class MainActivity extends BaseActivity<MainPresenter>
         }
     }
 
+
+
     public void onResume() {
         super.onResume();
+
         MobclickAgent.onResume(this);
     }
     public void onPause() {

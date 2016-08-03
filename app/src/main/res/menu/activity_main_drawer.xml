@@ -15,10 +15,7 @@
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_menu_about"
                 android:title="关于 "/>
-           <item
-                android:id="@+id/nav_contact_me"
-                android:icon="@mipmap/ic_contact_me"
-                android:title="联系我"/>
+
         </menu>
     </item>
 

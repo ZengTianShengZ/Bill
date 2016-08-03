@@ -208,9 +208,13 @@ public class SQUtil {
         String month = a[1];
         String day = a[2];
         Calendar c= Calendar.getInstance();//获取当前日期
+        Log.i("...","................."+year+".."+month+"..."+day);
+        Log.i("...","................."+year+".."+month+"..."+day);
+        Log.i("...","................."+year+".."+month+"..."+day);
+        Log.i("...","................."+year+".."+month+"..."+day);
         c.set(Integer.parseInt(year),Integer.parseInt(month)-1,Integer.parseInt(day));
         //int week1 = c.get(Calendar.DAY_OF_WEEK);
-        return DataUtils.getWeek(c.get(Calendar.DAY_OF_WEEK));
+        return DataUtils.weekDays[c.get(Calendar.DAY_OF_WEEK)-1];
     }
 }
 
