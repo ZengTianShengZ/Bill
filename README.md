@@ -18,4 +18,6 @@
 
 
 > 版本1.2
-[下载地址](http://fir.im/Billapk)
+[安卓市场](http://apk.hiapk.com/appinfo/bill.zts.com.bill)
+[91助手](http://shouji.baidu.com/software/9756008.html)
+[豌豆荚](http://www.wandoujia.com/apps/bill.zts.com.bill)
